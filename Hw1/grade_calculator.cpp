@@ -120,14 +120,13 @@ int main() {
         all_exam = exam + exam1;
     }
     exam_average = final_exam * .4 + (all_exam / 2) * .6;
+    //
     if (hw != 0){
         hw_average = hw / hw_num;
         if (hw_average > 100){
             hw_average = 100;
         }
-    else {
-        hw_average = hw;
-    }
+    //
     }
     if (lw != 0){
         lw_average = lw / lw_num;
@@ -135,15 +134,19 @@ int main() {
     else {
         lw_average = lw;
     }
+    //
     if (reading !=0){
         reading = reading / reading_num * 100;
-    }
-    if (100 <= reading && reading >= 85){
+        if (100 <= reading && reading >= 85){
         reading = 100;
-    }
-    else{
+        }
+        else{
         reading += 15;
+    }}
+    else if (reading == 0) {
+        reading = 15;
     }
+    //
     if (100 < engagement && engagement >= 85){
         engagement = 100;
     }
