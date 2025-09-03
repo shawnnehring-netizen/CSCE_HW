@@ -40,16 +40,17 @@ int main() {
 
     // TODO(student): declare and initialize variables
     double exam = 0;
-    double hw;
-    double lw;
-    double final_exam;
-    double reading;
-    double engagement = 15;
+    double hw = 0;
+    double lw = 0;
+    double final_exam = 0;
+    double reading = 0;
+    double engagement = 0;
     char final_letter_grade;
     int exam_num = 0;
     int hw_num = 0;
     int lw_num = 0;
     int reading_num = 0;
+    int engagement_num = 0;
     double exam1 = 0;
     double exam2 = 0;
     string line;
@@ -96,7 +97,9 @@ int main() {
             reading_num += 1;
         } else if (category == "engagement") {
             // TODO(student): process engagement score
-            engagement += score;
+            if (score > 0){
+                engagement += 1; }
+            engagement_num += 1;
         } else {
             cout << "ignored invalid input" << endl;
         }
@@ -131,24 +134,32 @@ int main() {
     if (lw != 0){
         lw_average = lw / lw_num;
     }
-    else {
-        lw_average = lw;
+    else if (lw == 0) {
+         lw_average = lw;
     }
     //
     if (reading !=0){
         reading = reading / reading_num * 100;
-        if (100 <= reading && reading >= 85){
-        reading = 100;
+        if (reading >= 85){
+            reading = 100;
         }
         else{
-        reading += 15;
+            reading += 15;
     }}
     else if (reading == 0) {
         reading = 15;
     }
     //
-    if (100 < engagement && engagement >= 85){
-        engagement = 100;
+    if (engagement !=0){
+        engagement = engagement / engagement_num * 100;
+        if (engagement >= 85){
+            engagement = 100;
+        }
+        else{
+            engagement += 15;
+    }}
+    else if (engagement == 0) {
+        engagement = 15;
     }
     // TODO(student): compute weighted total of components
     double weighted_total = 0.2 * hw_average + 0.1 * lw_average + exam_average * .6+ reading * 0.05 + engagement * 0.05;
