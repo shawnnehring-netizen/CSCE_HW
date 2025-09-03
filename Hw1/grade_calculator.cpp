@@ -44,7 +44,7 @@ int main() {
     double lw;
     double final_exam;
     double reading;
-    double engagement;
+    double engagement = 15;
     char final_letter_grade;
     int exam_num = 0;
     int hw_num = 0;
@@ -73,7 +73,11 @@ int main() {
             hw_num += 1;
         } else if (category == "lw") {
             // TODO(student): process lw score
-            lw += score;
+            if (score >= 50){
+                lw += 100;}
+            else{
+                lw += 0;
+            }
             lw_num += 1;
         } else if (category == "reading") {
             // TODO(student): process reading score
@@ -95,28 +99,43 @@ int main() {
     double exam_average = 0;
     double mid_exam = 0;
     // TODO(student): compute component averages and assign to the above variables
-    mid_exam = exam / exam_num;
+    if (exam != 0){
+        mid_exam = exam / exam_num;
+    }
     exam_average = final_exam * .4 + mid_exam * .6;
-    hw_average = hw / hw_num;
-    lw_average = lw / lw_num;
-    reading = reading / reading_num * 100;
+    if (hw != 0){
+        hw_average = hw / hw_num;
+    }
+    if (lw != 0){
+        lw_average = lw / lw_num;
+    }
+    if (reading !=0){
+        reading = reading / reading_num * 100;
+    }
+    if (100 < reading && reading >= 85){
+        reading = 100;
+    }
+    else{
+        reading += 15;
+    }
+    if (100 < engagement && engagement >= 85){
+        engagement = 100;
+    }
     // TODO(student): compute weighted total of components
-    double weighted_total = 0.2 * hw_average + 0.1 * lw_average + exam_average * .5+ reading * 0.05 + engagement * 0.05;
+    double weighted_total = 0.2 * hw_average + 0.1 * lw_average + exam_average * .6+ reading * 0.05 + engagement * 0.05;
 
     // TODO(student): compute final letter grade
-    cout << "here" << (weighted_total >= 60.0) << endl;
-    if (weighted_total >= 90.0){
+    if (weighted_total >= 89.5){
         final_letter_grade = 'A';
-    }else if (weighted_total >= 80.0){
+    }else if (weighted_total >= 79.5){
         final_letter_grade = 'B';
-    }else if (weighted_total >= 70.0){
+    }else if (weighted_total >= 69.5){
         final_letter_grade = 'C';
-    }else if (weighted_total >= 60.0){
+    }else if (weighted_total >= 59.5){
         final_letter_grade = 'D';
-    }else if (weighted_total >= 0.0){
+    }else{
         final_letter_grade = 'F';
     }
-    cout << "here" << final_letter_grade << endl;
     // Do not modify print_results since this will not help
     print_results(
         exam_average, hw_average, lw_average, reading, engagement,
