@@ -39,7 +39,7 @@ int main() {
     // ONLY MAKE CHANGES WHERE THERE IS A TODO(student)
 
     // TODO(student): declare and initialize variables
-    double exam;
+    double exam = 0;
     double hw;
     double lw;
     double final_exam;
@@ -50,6 +50,8 @@ int main() {
     int hw_num = 0;
     int lw_num = 0;
     int reading_num = 0;
+    double exam1 = 0;
+    double exam2 = 0;
     string line;
     // read one line from standard input (discards the ending newline character)
     getline(cin, line);
@@ -62,8 +64,17 @@ int main() {
         // process the grade entry
         if (category == "exam") {
             // TODO(student): process midterm exam score
-            exam += score;
+            if (exam_num == 0){
+                exam = score;
+            }
+            else if (exam_num == 1){
+                exam1 = score;
+            }
+            else if (exam_num == 2){
+                exam2 = score;
+            }
             exam_num += 1;
+
         } else if (category == "final-exam") {
             // TODO(student): process final exam score
             final_exam = score;
@@ -97,22 +108,37 @@ int main() {
     double hw_average = 0;
     double lw_average = 0;
     double exam_average = 0;
-    double mid_exam = 0;
+    double all_exam = 0;
     // TODO(student): compute component averages and assign to the above variables
-    if (exam != 0){
-        mid_exam = exam / exam_num;
+    if (exam >= exam1 && exam2 >= exam1){
+        all_exam = exam + exam2;
     }
-    exam_average = final_exam * .4 + mid_exam * .6;
+    else if (exam1 >= exam && exam2 >= exam){
+        all_exam = exam1 + exam2;
+    }
+    else if (exam >= exam2 && exam1 >= exam2){
+        all_exam = exam + exam1;
+    }
+    exam_average = final_exam * .4 + (all_exam / 2) * .6;
     if (hw != 0){
         hw_average = hw / hw_num;
+        if (hw_average > 100){
+            hw_average = 100;
+        }
+    else {
+        hw_average = hw;
+    }
     }
     if (lw != 0){
         lw_average = lw / lw_num;
     }
+    else {
+        lw_average = lw;
+    }
     if (reading !=0){
         reading = reading / reading_num * 100;
     }
-    if (100 < reading && reading >= 85){
+    if (100 <= reading && reading >= 85){
         reading = 100;
     }
     else{
