@@ -1,0 +1,5 @@
+exam 80
+hw 100
+lw 50
+engagement 85
+reading 1
