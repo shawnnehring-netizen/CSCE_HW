@@ -46,6 +46,9 @@ int main() {
     double reading;
     double engagement;
     char final_letter_grade;
+    int exam_num = 0;
+    int hw_num = 0;
+    int lw_num = 0;
     string line;
     // read one line from standard input (discards the ending newline character)
     getline(cin, line);
@@ -58,22 +61,25 @@ int main() {
         // process the grade entry
         if (category == "exam") {
             // TODO(student): process midterm exam score
-            exam = score;
+            exam += score;
+            exam_num += 1;
         } else if (category == "final-exam") {
             // TODO(student): process final exam score
             final_exam = score;
         } else if (category == "hw") {
             // TODO(student): process hw score
             hw = score;
+            hw_num += 1;
         } else if (category == "lw") {
             // TODO(student): process lw score
             lw = score;
+            lw_num += 1;
         } else if (category == "reading") {
             // TODO(student): process reading score
-            reading = score;
+            reading += score;
         } else if (category == "engagement") {
             // TODO(student): process engagement score
-            engagement = score;
+            engagement += score;
         } else {
             cout << "ignored invalid input" << endl;
         }
@@ -86,12 +92,10 @@ int main() {
     double lw_average = 0;
     double exam_average = 0;
     // TODO(student): compute component averages and assign to the above variables
-    // exam_average = ???; // etc.
-    //hw_average = hw
-    //lw_average = 
-    //exam_average = 
+    exam_average = exam / exam_num;
+    hw_average = hw / hw_num;
+    lw_average = lw / lw_num;
     //reading = 
-    //engagement = 
 
     // TODO(student): compute weighted total of components
     double weighted_total = 0.2 * hw_average + 0.1 * lw_average + exam_average * .36 + reading * 0.05 + final_exam * .24 + engagement * 0.05;
