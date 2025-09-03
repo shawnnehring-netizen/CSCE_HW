@@ -39,7 +39,13 @@ int main() {
     // ONLY MAKE CHANGES WHERE THERE IS A TODO(student)
 
     // TODO(student): declare and initialize variables
-
+    double exam;
+    double hw;
+    double lw;
+    double final_exam;
+    double reading;
+    double engagement;
+    char final_letter_grade;
     string line;
     // read one line from standard input (discards the ending newline character)
     getline(cin, line);
@@ -52,16 +58,22 @@ int main() {
         // process the grade entry
         if (category == "exam") {
             // TODO(student): process midterm exam score
+            exam = score;
         } else if (category == "final-exam") {
             // TODO(student): process final exam score
+            final_exam = score;
         } else if (category == "hw") {
             // TODO(student): process hw score
+            hw = score;
         } else if (category == "lw") {
             // TODO(student): process lw score
+            lw = score;
         } else if (category == "reading") {
             // TODO(student): process reading score
+            reading = score;
         } else if (category == "engagement") {
             // TODO(student): process engagement score
+            engagement = score;
         } else {
             cout << "ignored invalid input" << endl;
         }
@@ -73,16 +85,28 @@ int main() {
     double hw_average = 0;
     double lw_average = 0;
     double exam_average = 0;
-    double reading = 0;
-    double engagement = 0;
     // TODO(student): compute component averages and assign to the above variables
     // exam_average = ???; // etc.
+    //hw_average = hw
+    //lw_average = 
+    //exam_average = 
+    //reading = 
+    //engagement = 
 
     // TODO(student): compute weighted total of components
-    double weighted_total = 0;
+    double weighted_total = 0.2 * hw_average + 0.1 * lw_average + exam_average * .36 + reading * 0.05 + final_exam * .24 + engagement * 0.05;
 
     // TODO(student): compute final letter grade
-    char final_letter_grade = 'X';
+    if (weighted_total >= 90)
+        char final_letter_grade = 'A';
+    else if (weighted_total >= 80)
+        char final_letter_grade = 'B';
+    else if (weighted_total >= 70)
+        char final_letter_grade = 'C';
+    else if (weighted_total >= 60)
+        char final_letter_grade = 'D';
+    else if (weighted_total >= 0)
+        char final_letter_grade = 'F';
 
     // Do not modify print_results since this will not help
     print_results(
