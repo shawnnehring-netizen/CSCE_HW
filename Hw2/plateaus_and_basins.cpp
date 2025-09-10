@@ -16,11 +16,11 @@ int main() {
 			quit = true;
 			break;
 		}
-		while(!is_valid_range(a, b)) {
-			std::cout << "Invalid Range" << std::endl;
-			std::cout << "Enter range: ";
-			std::cin >> a >> b;
-		}
+		//while(!is_valid_range(a, b)) {
+		//	std::cout << "Invalid Range" << std::endl;
+		//	std::cout << "Enter range: ";
+		//	std::cin >> a >> b;
+		//}
 		plateaus_and_basins count = count_pb_numbers(a, b);
 		std::cout << "There are " << count.plateaus << " plateaus"
 	              << " and " << count.basins << " basins"

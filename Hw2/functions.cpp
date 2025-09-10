@@ -52,7 +52,7 @@ char classify_geo_type(long long number) {
 	}
 
 	// TODO(student): Determine whether number is a basin
-	//                If you get the logic for plateau right, minor tweaks can create the code for basins.
+	//If you get the logic for plateau right, minor tweaks can create the code for basins.
 	while (bas_num != 0){
 		//std::cout << bas_num << std::endl;
 		bas_num = bas_num / 10;
@@ -102,7 +102,6 @@ plateaus_and_basins count_pb_numbers(long long a, long long b) {
 		else if (value == 'b'){
 			number_of_basins += 1;
 		}
-		break;
 	}
 	return {number_of_plateaus, number_of_basins};
 }
