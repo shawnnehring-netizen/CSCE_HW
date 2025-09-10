@@ -21,9 +21,9 @@ char classify_geo_type(long long number) {
 	int step_bas = 0;
 	char value = 'n';
 	// TODO(student): Determine whether number is a plateau: this is the key loop
-	while (number != 0 && step_plat == 2){
+	while (number != 0){
 		number = number / 10;
-		if (number == 0){
+		if (number == 0 && step_plat == 3){
 			std::cout << 'p';
 			value = 'p';
 		}
@@ -54,7 +54,7 @@ char classify_geo_type(long long number) {
 	//                If you get the logic for plateau right, minor tweaks can create the code for basins.
 	while (number != 0){
 		number = number / 10;
-		if (number == 0 && step_bas == 2){
+		if (number == 0 && step_bas == 3){
 			value = 'b';
 		}
 		int rem = number % 10;
