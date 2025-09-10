@@ -16,18 +16,19 @@ bool is_valid_range(long long a, long long b) {
 // returns the 'p' if number is a plateau, 'b' if number is a basin, and 'n' if number is neither
 char classify_geo_type(long long number) {
 	// TODO(student): Initialize local variables
+	long long plat_num = number;
+	long long bas_num = number;
 	int old_rem = number % 10;
 	int step_plat = 0;
 	int step_bas = 0;
 	char value = 'n';
 	// TODO(student): Determine whether number is a plateau: this is the key loop
-	while (number != 0){
-		number = number / 10;
-		if (number == 0 && step_plat == 3){
-			std::cout << 'p';
-			value = 'p';
-		}
-		int rem = number % 10;
+	while (plat_num != 0){
+		plat_num = plat_num / 10;
+		if (plat_num == 0 && step_plat == 3){
+			//std::cout << 'p';
+			value = 'p';}
+		int rem = plat_num % 10;
 		//std::cout << old_rem << ' ' << rem << ' ';
 		if (rem > old_rem && (step_plat == 0 || step_plat == 1)){
 			step_plat = 1;
@@ -52,12 +53,12 @@ char classify_geo_type(long long number) {
 
 	// TODO(student): Determine whether number is a basin
 	//                If you get the logic for plateau right, minor tweaks can create the code for basins.
-	while (number != 0){
-		number = number / 10;
-		if (number == 0 && step_bas == 3){
-			value = 'b';
-		}
-		int rem = number % 10;
+	while (bas_num != 0){
+		//std::cout << bas_num << std::endl;
+		bas_num = bas_num / 10;
+		if (bas_num == 0 && step_bas == 3){
+			value = 'b';}
+		int rem = bas_num % 10;
 		//std::cout << old_rem << ' ' << rem << ' ';
 		if (rem < old_rem && (step_bas == 0 || step_bas == 1)){
 			step_bas = 1;
