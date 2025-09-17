@@ -11,9 +11,21 @@
 //     36.5 NED 1  Verstappen
 //   rank should be initialized to 0 for each driver
 // returns a vector of drivers, or an empty vector if any input is invalid
-std::vector<driver> load_driver_data() {
+std::vector<driver> load_driver_data(std::string&line) {
+    std::vector<driver> data;
+    std::string word = "";
+    for (char c : line){
+            if (c == ' ' || c == '\n'){
+                data.insert(data.begin(),word);
+                word.clear();
+            }
+            else {
+                word += c;
+            }
+    }
+
     // TODO(student)
-    return {};
+    return driver;
 }
 
 // returns a copy of the input vector with ranks set based on the time for each driver.
