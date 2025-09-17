@@ -33,13 +33,24 @@ std::vector<driver> load_driver_data(std::string&line) {
 // the order of the elements in the vector should not be changed
 std::vector<driver> set_rankings(std::vector<driver>) {
     // TODO(student)
+    int wins = 0;
+    for (int i; i < driver.length(); i++){
+        for (int j; j < driver.length(); j++){
+            if (driver[i][3] > driver[j][3]){
+                wins += 1;
+            }
+        }
+        int rank = driver.length() - wins;
+        driver[i].push_back(rank);
+    }
     return {};
 }
 
 // returns a copy of the input string with whitespace removed from the front and back
-std::string trim(std::string) {
+std::string trim(std::string&line) {
     // TODO(student)
-    return "";
+    line.erase(0,line.size(),' ')
+    return line;
 }
 
 // print the results of the race
