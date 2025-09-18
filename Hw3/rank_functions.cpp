@@ -12,17 +12,28 @@
 //   rank should be initialized to 0 for each driver
 // returns a vector of drivers, or an empty vector if any input is invalid
 std::vector<driver> load_driver_data(std::string&line) {
-    std::vector<driver> data;
+    driver data;
     std::string word = "";
+    int step = 0;
     for (char c : line){
             if (c == ' ' || c == '\n'){
-                data.insert(data.begin(),word);
+                if (step == 0){ //double for time
+                step += 1;
+                }
+                else if (step == 1){ //Country
+                step += 1;
+                data.country = word
+                }
+                else if (step == 2){ // two number int
+                data.number = 
+                }
                 word.clear();
             }
             else {
                 word += c;
             }
     }
+    data.lastname = word
 
     // TODO(student)
     return driver;
@@ -32,16 +43,17 @@ std::vector<driver> load_driver_data(std::string&line) {
 //   the fastest/minimum time is ranked 1
 // the order of the elements in the vector should not be changed
 std::vector<driver> set_rankings(std::vector<driver>) {
+    std::vector<driver> data;
     // TODO(student)
     int wins = 0;
-    for (int i; i < driver.length(); i++){
-        for (int j; j < driver.length(); j++){
-            if (driver[i][3] > driver[j][3]){
+    for (int i; i < data.length(); i++){
+        for (int j; j < data.length(); j++){
+            if (data[i][3] > data[j][3]){
                 wins += 1;
             }
         }
-        int rank = driver.length() - wins;
-        driver[i].push_back(rank);
+        int place = data.length() - wins;
+        data.rank = place;
     }
     return {};
 }
