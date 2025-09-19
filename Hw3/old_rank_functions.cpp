@@ -21,18 +21,26 @@ std::vector<driver> load_driver_data(std::string) {
         for (char c : line){
             if (c == ' ' || c == '\n'){
                 if (step == 0){ //double for time
+                    if (std::stoi(word) <= 0);
+                        return {};
                     step += 1;
                     data.time = std::stoi(word);
                 }
                 else if (step == 1){ //Country
+                    if (word. <= 0);
+                        return {};
                     step += 1;
                     data.country = word;
                 }
                 else if (step == 2){ // two number int
+                    if (std::stoi(word) <= 0);
+                        return {};
                     data.number = std::stoi(word);
                     step += 1;
                 }
                 else if (step == 3){
+                    if (std::stoi(word) <= 0);
+                        return {};
                     data.lastname = word;
                     data.rank = 0;
                 }
