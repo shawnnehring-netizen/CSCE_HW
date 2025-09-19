@@ -21,13 +21,28 @@ std::vector<driver> load_driver_data() {
 // the order of the elements in the vector should not be changed
 std::vector<driver> set_rankings(std::vector<driver>) {
     // TODO(student)
+    std::vector<driver> data;
+    // TODO(student)
+    int wins = 0;
+    for (long unsigned int i; i < data.size(); i++){
+        for (long unsigned int j; j < data.size(); j++){
+            if (data[i].time > data[j].time){
+                wins += 1;
+            }
+        }
+        int place = data.size() - wins;
+        data[i].rank = place;
+    }
     return {};
 }
 
 // returns a copy of the input string with whitespace removed from the front and back
-std::string trim(std::string) {
-    // TODO(student)
-    return "";
+std::string trim(std::string&line) {
+    while (line.at(0) == ' '){
+        line.erase(line.begin());}
+    while (line.at(-1) == ' '){
+        line.erase(line.end());}
+    return line;
 }
 
 // print the results of the race
