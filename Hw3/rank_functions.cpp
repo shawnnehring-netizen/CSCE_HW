@@ -109,11 +109,11 @@ std::vector<driver> set_rankings(std::vector<driver>data) {
 // returns a copy of the input string with whitespace removed from the front and back
 std::string trim(std::string line) {
     while (line.at(0) == ' '){
-        line.erase(line.begin());}
-        std::cout << line.at(0) << "here" << std::endl;
+        //std::cout << line.at(0) << "here" << std::endl;
+        line.erase(line.begin()+0);}
     while (line.at(line.length()-1) == ' '){
-        std::cout << line.at(line.length()-1) << "here" << std::endl;
-        line.erase(line.end());}
+        //std::cout << line.at(line.length()-1) << "here" << std::endl;
+        line.erase(line.length()-1);}
     return line;
 }
 
