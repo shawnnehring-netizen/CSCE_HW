@@ -21,6 +21,7 @@ std::vector<driver> load_driver_data() {
     int dub_spa = 0;
     while (std::getline(std::cin,line)){
         //std::cout << line << std::endl;
+        line = trim(line);
         for (char c : line){
             if (c == ' ' && c != '.' && dub_spa == 0){
                 if (step == 3) break;
@@ -109,11 +110,11 @@ std::vector<driver> set_rankings(std::vector<driver>data) {
 // returns a copy of the input string with whitespace removed from the front and back
 std::string trim(std::string line) {
     if (line.length() == 0) return "";
-    while (line.at(0) == ' '){
+    while (line.at(0) == ' ' || line.at(0) == '\t' || line.at(0) == '\r'){
         //std::cout << line.at(0) << "here" << std::endl;
         line.erase(line.begin()+0);
         if (line.length() == 0) return "";}
-    while (line.at(line.length()-1) == ' '){
+    while (line.at(line.length()-1) == ' ' || line.at(line.length()-1) == '\t' || line.at(line.length()-1) == '\r'){
         //std::cout << line.at(line.length()-1) << "here" << std::endl;
         line.erase(line.length()-1);}
     return line;
