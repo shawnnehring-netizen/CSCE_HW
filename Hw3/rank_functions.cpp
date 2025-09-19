@@ -20,15 +20,16 @@ std::vector<driver> load_driver_data() {
     std::string line;
     int dub_spa = 0;
     while (std::getline(std::cin,line)){
-        //std::cout << line << std::endl;
+
+        std::cout << line << std::endl;
         for (char c : line){
             if (c == ' ' && c != '.' && dub_spa == 0){
                 if (step == 0){ //double for time
-                    if (std::stoi(word) <= 0);
-                        return {};
+                    if (std::stod(word) <= 0){
+                        return {};}
                     step += 1;
                     data.time = std::stod(word);
-                    //std::cout << std::stod(word) << std::endl;
+                    std::cout << std::stod(word) << std::endl;
                 }
                 else if (step == 1){ //Country
                     if (word.length() != 3){
@@ -40,13 +41,13 @@ std::vector<driver> load_driver_data() {
                     }
                     step += 1;
                     data.country = word;
-                    //std::cout << word << std::endl;
+                    std::cout << word << std::endl;
                 }
                 else if (step == 2){ // two number int
                     if (std::stoi(word) < 0 || std::stoi(word) > 99){
                         return {};}
                     data.number = std::stoi(word);
-                    //std::cout << std::stoi(word) << std::endl;
+                    std::cout << std::stoi(word) << std::endl;
                     step += 1;
                 }
                 word.clear();
@@ -58,15 +59,15 @@ std::vector<driver> load_driver_data() {
             }
         }
         data.lastname = word;
+        if (word.length() < 2){
             return {};
-        if (word.length() < 2);
+        }
         for (char j : word){
             if (std::isalpha(j) == 0) {
                 return {};
             }
         }
-            return {};
-        //std::cout << word << std::endl;
+        std::cout << word << std::endl;
         data.rank = 0;
         word.clear();
         step = 0;
@@ -89,9 +90,9 @@ std::vector<driver> set_rankings(std::vector<driver>data) {
     //std::cout << data[1].time;
     // TODO(student)
     int wins = 0;
-    for (int i=0; i < data.size(); i++){
+    for (long unsigned int i=0; i < data.size(); i++){
         //std::cout << i << std::endl;
-        for (int j=0; j < data.size(); j++){
+        for (long unsigned int j=0; j < data.size(); j++){
             if (data[i].time < data[j].time){
                 wins += 1;
             }
@@ -106,7 +107,7 @@ std::vector<driver> set_rankings(std::vector<driver>data) {
 }
 
 // returns a copy of the input string with whitespace removed from the front and back
-std::string trim(std::string&line) {
+std::string trim(std::string line) {
     while (line.at(0) == ' '){
         line.erase(line.begin());}
     while (line.at(-1) == ' '){
