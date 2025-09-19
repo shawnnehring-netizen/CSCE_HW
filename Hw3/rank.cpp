@@ -8,8 +8,8 @@ int main() {
     if (driver_list.size() == 0){
         std::cout<< "Bad input" << std::endl;
         return 1;
-
     }
+    std::cout << trim("   hello  ");
     // TODO(student): if loading driver data failed,
     //                1) print "Bad input" to standard output
     //                2) exit the program by returning 1
