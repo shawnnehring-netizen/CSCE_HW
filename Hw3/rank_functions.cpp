@@ -20,10 +20,10 @@ std::vector<driver> load_driver_data() {
     std::string line;
     int dub_spa = 0;
     while (std::getline(std::cin,line)){
-
         //std::cout << line << std::endl;
         for (char c : line){
             if (c == ' ' && c != '.' && dub_spa == 0){
+                if (step == 3) break;
                 if (step == 0){ //double for time
                     if (std::stod(word) <= 0){
                         return {};}
@@ -110,7 +110,8 @@ std::vector<driver> set_rankings(std::vector<driver>data) {
 std::string trim(std::string line) {
     while (line.at(0) == ' '){
         //std::cout << line.at(0) << "here" << std::endl;
-        line.erase(line.begin()+0);}
+        line.erase(line.begin()+0);
+        if (line.length() == 0) return "";}
     while (line.at(line.length()-1) == ' '){
         //std::cout << line.at(line.length()-1) << "here" << std::endl;
         line.erase(line.length()-1);}

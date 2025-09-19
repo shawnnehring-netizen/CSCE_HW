@@ -9,7 +9,7 @@ int main() {
         std::cout<< "Bad input" << std::endl;
         return 1;
     }
-    //std::cout << trim("   hello ");
+    //std::cout << trim("    ");
     // TODO(student): if loading driver data failed,
     //                1) print "Bad input" to standard output
     //                2) exit the program by returning 1
