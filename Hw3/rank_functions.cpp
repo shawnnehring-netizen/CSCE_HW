@@ -24,7 +24,11 @@ std::vector<driver> load_driver_data() {
         line = trim(line);
         for (char c : line){
             if (c == ' ' && c != '.' && dub_spa == 0){
-                if (step == 3) break;
+                if (step == 3){
+                    word += c;
+                    dub_spa = 0;
+                    continue;
+                }
                 if (step == 0){ //double for time
                     if (std::stod(word) <= 0){
                         return {};}
@@ -59,16 +63,17 @@ std::vector<driver> load_driver_data() {
                 dub_spa = 0;
             }
         }
+        //std::cout << word << std::endl;
         data.lastname = word;
         if (word.length() < 2){
             return {};
         }
         for (char j : word){
+            if (j == ' ') continue;
             if (std::isalpha(j) == 0) {
                 return {};
             }
         }
-        //std::cout << word << std::endl;
         data.rank = 0;
         word.clear();
         step = 0;
