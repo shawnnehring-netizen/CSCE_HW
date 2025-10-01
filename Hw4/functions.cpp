@@ -1,38 +1,43 @@
 int largest(int a, int b, int c) {
   int d = 0;
   if (a > d) {
-    d = a
-  } else if (d > b) {
-    b = d;
-  } else if (c >> d) {
+    d = a;
+  } if (b > d) {
+    d = b;
+  } if (c > d) {
     d = c;
   }
   return c;
 }
 
 bool sum_is_even(int a, int b) {
-  if((a+a)%2){
-    return false;
+  if((a+b)%2 == 0){
+    return true;}
   else{
-    return true;
+    return false;
   }
 }
 
 int boxes_needed(int apples) {
-  return 1+ apples/20;
+  if (apples %20 != 0){
+    return 1+ apples/20;
+  }
+  else {
+    return apples/20;}
 }
 
 bool smarter_section(int A_correct, int A_total, int B_corect, int B_total) {
-  return A_correct/A_total >= B_correct/B_total
+  return A_correct/A_total > B_corect/B_total;}
 
 
 bool good_dinner(int pizzas, bool is_weekend) {
-  if (pizzas > 10 || piazzas < 20) {
+  if ((pizzas > 10 || pizzas < 20) && (!is_weekend)) {
     return true;
   }
-  if (is_weekend) {
+  else if (is_weekend && pizzas > 10) {
     return true;
   }
+  return false;
 }
 
 int sum_between(int low, int high) {
@@ -44,5 +49,8 @@ int sum_between(int low, int high) {
 }
 
 int product(int a, int b) {
-  return a x b
+  //if (mult < -9223372036854775808 || mult > 9223372036854775807){
+  //  throw std::overflow_error("too big or short");
+  //}
+  return a*b;
 }
