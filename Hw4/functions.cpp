@@ -30,9 +30,11 @@ int boxes_needed(int apples) {
 
 bool smarter_section(int A_correct, int A_total, int B_correct, int B_total) {
   if (A_correct > A_total || B_correct > B_total){
+    throw std::invalid_argument("invalid input");}
+  if (!(A_correct > 0 && A_total > 0 && B_correct > 0 && B_total > 0)){
     throw std::invalid_argument("invalid input");
   }
-  return A_correct/A_total > B_correct/B_total;}
+  return (A_correct/A_total) > (B_correct/B_total);}
 
 
 bool good_dinner(int pizzas, bool is_weekend) {
@@ -46,13 +48,19 @@ bool good_dinner(int pizzas, bool is_weekend) {
 }
 
 int sum_between(int low, int high) {
-  int sum = (low + high) * ((high + 1 -low)/2);
-  return sum;
+  int sum = (low + high);
+  double div = (high + 1 - low)/2;
+  int total = div + sum;
+  if (total > 2147483647 || total < -2147483648){
+    throw std::overflow_error('overflow');
+  }
+  return total;
 }
 
 int product(int a, int b) {
-  //if (mult < -9223372036854775808 || mult > 9223372036854775807){
-  //  throw std::overflow_error("too big or short");
-  //}
-  return a*b;
+  int mult a*b;
+  if (mult < -9223372036854775808 || mult > 9223372036854775807){
+    throw std::overflow_error("overflow");
+  }
+  return mult;
 }
