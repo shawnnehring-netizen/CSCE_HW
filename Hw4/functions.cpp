@@ -36,7 +36,8 @@ bool smarter_section(int A_correct, int A_total, int B_correct, int B_total) {
   if (!(A_correct > 0 && A_total > 0 && B_correct > 0 && B_total > 0)){
     throw std::invalid_argument("invalid input");
   }
-  return (A_correct/A_total) > (B_correct/B_total);}
+  bool value = ((A_correct*100)/A_total) > ((B_correct*100)/B_total);
+  return value;}
 
 
 bool good_dinner(int pizzas, bool is_weekend) {
@@ -50,11 +51,11 @@ bool good_dinner(int pizzas, bool is_weekend) {
 }
 
 int sum_between(int low, int high) {
-  int32_t num_max = std::numeric_limits<int32_t>::max();
-  int32_t num_min = std::numeric_limits<int32_t>::min();
+  long int num_max = std::numeric_limits<int32_t>::max();
+  long int num_min = std::numeric_limits<int32_t>::min();
   int sum = (low + high);
   double div = (high + 1 - low)/2;
-  int total = div + sum;
+  int total = div * sum;
   if ((div + sum) > num_max || num_min < -2147483648){
     throw std::overflow_error("overflow");
   }
@@ -62,8 +63,8 @@ int sum_between(int low, int high) {
 }
 
 int product(int a, int b) {
-  int32_t num_max = std::numeric_limits<int64_t>::max();
-  int32_t num_min = std::numeric_limits<int64_t>::min();
+  long int num_max = std::numeric_limits<int64_t>::max();
+  long int num_min = std::numeric_limits<int64_t>::min();
   int mult = a * b;
   if ((a*b) < num_min || (a*b) > num_max){
     throw std::overflow_error("overflow");
