@@ -1,13 +1,13 @@
+#include <iostream>
+#include <stdexcept>
 int largest(int a, int b, int c) {
-  int d = 0;
-  if (a > d) {
-    d = a;
-  } if (b > d) {
+  int d = a;
+  if (b > d) {
     d = b;
   } if (c > d) {
     d = c;
   }
-  return c;
+  return d;
 }
 
 bool sum_is_even(int a, int b) {
@@ -19,6 +19,8 @@ bool sum_is_even(int a, int b) {
 }
 
 int boxes_needed(int apples) {
+  if (apples < 0){
+    return 0;}
   if (apples %20 != 0){
     return 1+ apples/20;
   }
@@ -26,26 +28,26 @@ int boxes_needed(int apples) {
     return apples/20;}
 }
 
-bool smarter_section(int A_correct, int A_total, int B_corect, int B_total) {
-  return A_correct/A_total > B_corect/B_total;}
+bool smarter_section(int A_correct, int A_total, int B_correct, int B_total) {
+  if (A_correct > A_total || B_correct > B_total){
+    throw std::invalid_argument("invalid input");
+  }
+  return A_correct/A_total > B_correct/B_total;}
 
 
 bool good_dinner(int pizzas, bool is_weekend) {
-  if ((pizzas > 10 || pizzas < 20) && (!is_weekend)) {
+  if ((pizzas >= 10 && pizzas <= 20) && (!is_weekend)) {
     return true;
   }
-  else if (is_weekend && pizzas > 10) {
+  else if (is_weekend && pizzas >= 10) {
     return true;
   }
   return false;
 }
 
 int sum_between(int low, int high) {
-  int value = 0;
-  for (int n = low; n < high; n++) {
-    value += n;
-  }
-  return 55;
+  int sum = (low + high) * ((high + 1 -low)/2);
+  return sum;
 }
 
 int product(int a, int b) {
