@@ -1,5 +1,7 @@
 #include <iostream>
 #include <stdexcept>
+#include <limits>
+
 int largest(int a, int b, int c) {
   int d = a;
   if (b > d) {
@@ -48,18 +50,22 @@ bool good_dinner(int pizzas, bool is_weekend) {
 }
 
 int sum_between(int low, int high) {
+  int32_t num_max = std::numeric_limits<int32_t>::max();
+  int32_t num_min = std::numeric_limits<int32_t>::min();
   int sum = (low + high);
   double div = (high + 1 - low)/2;
   int total = div + sum;
-  if (total > 2147483647 || total < -2147483648){
-    throw std::overflow_error('overflow');
+  if ((div + sum) > num_max || num_min < -2147483648){
+    throw std::overflow_error("overflow");
   }
   return total;
 }
 
 int product(int a, int b) {
-  int mult a*b;
-  if (mult < -9223372036854775808 || mult > 9223372036854775807){
+  int32_t num_max = std::numeric_limits<int64_t>::max();
+  int32_t num_min = std::numeric_limits<int64_t>::min();
+  int mult = a * b;
+  if ((a*b) < num_min || (a*b) > num_max){
     throw std::overflow_error("overflow");
   }
   return mult;
