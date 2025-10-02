@@ -64,7 +64,7 @@ void test_good_dinner() {
 
 void test_sum_between() {
     // sum_between(1, 10) should return 55
-    expect_eq(sum_between(1, 10), 55);
+    expect_eq(sum_between(32581, 57929), 1147168995);
 }
 
 void test_product() {
