@@ -68,7 +68,7 @@ void test_sum_between() {
 }
 
 void test_product() {
-    // product(2, 2) should return 4
+    //product(2, 2) should return 4
     //expect_eq(product(2, 2), 4);
 }
 
