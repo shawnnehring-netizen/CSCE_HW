@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <limits>
+#include "functions.h"
 
 int largest(int a, int b, int c) {
   int d = a;
@@ -52,7 +53,7 @@ bool good_dinner(int pizzas, bool is_weekend) {
   return false;
 }
 
-int sum_between(int low, int high) {
+int32_t sum_between(int32_t low, int32_t high) {
   if (high < low){
     throw std::invalid_argument("invalid argument");
   }
@@ -72,7 +73,7 @@ int sum_between(int low, int high) {
   return total;
 }
 
-int product(int a, int b) {
+int64_t product(int64_t a, int64_t b) {
   long long int num_max = std::numeric_limits<int64_t>::max();
   long long int num_min = std::numeric_limits<int64_t>::min();
   long long int mult = a * b;
