@@ -59,7 +59,7 @@ int sum_between(int low, int high) {
   if (high == low){
     return high;
   }
-  long int num_max = sstd::numeric_limits<int32_t>::max();
+  long int num_max = std::numeric_limits<int32_t>::max();
   long int num_min = std::numeric_limits<int32_t>::min();
   long int sum = (low + high);
   long double div_1 = low / 2.0;
