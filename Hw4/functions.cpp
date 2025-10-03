@@ -76,13 +76,9 @@ int32_t sum_between(int32_t low, int32_t high) {
 int64_t product(int64_t a, int64_t b) {
   int64_t num_max = std::numeric_limits<int64_t>::max();
   int64_t num_min = std::numeric_limits<int64_t>::min();
-  //std::cout << a*b << " " << a << " " << b << s" " << a;
-  if (b == 0){
-    return a*b;
-  }
-  if ((a == 0 || b == 0) && (a == num_min || b == num_min)){
+  int64_t mult = a*b;
+  //std::cout << (b/num_max) << " " << a << " " << b << " " << (b/num_max)*a;
+  if (((b/num_min)*a >= 1 || (b/num_min)*a <= -1 || (b/num_max)*a > 1) || (b/num_max)*a < -1){
     throw std::overflow_error("overflow");}
-  if ((b < 0 && (a > num_min/b || a < num_max/b)) || (b > 0 && (a < num_min/b || a > num_max/b))){
-    throw std::overflow_error("overflow");}
-  return a*b;
+  return mult;
 }
