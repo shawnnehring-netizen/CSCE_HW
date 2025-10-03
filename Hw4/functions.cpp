@@ -81,7 +81,7 @@ int64_t product(int64_t a, int64_t b) {
   if (b == 0){
     return mult;
   }
-  if (((a) > (num_min/b) || (a) < (num_max/b)) && ((a) < (num_min/b) || (a) > (num_max/b))){
+  if ((b < 0 && (a > num_min/b || a < num_max/b)) || (b > 0 && (a < num_min/b || a > num_max/b))){
     throw std::overflow_error("overflow");}
   return mult;
 }
