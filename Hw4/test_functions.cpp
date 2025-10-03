@@ -71,7 +71,7 @@ void test_product() {
     // product(2, 2) should return 4
     expect_eq(product(10, 20), 22);
     expect_eq(product(-1203520233, -1847685266), 22);
-    //expect_eq(product(-1,-9223372036854775808), 22);
+    expect_eq(product(-1,-9223372036854775808), 22);
 }
 
 int main() {

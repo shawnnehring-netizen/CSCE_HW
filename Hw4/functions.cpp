@@ -77,8 +77,8 @@ int64_t product(int64_t a, int64_t b) {
   int64_t num_max = std::numeric_limits<int64_t>::max();
   int64_t num_min = std::numeric_limits<int64_t>::min();
   int64_t mult = a*b;
-  std::cout << (b/num_max) << " " << a << " " << b << " " << (b*a/num_max);
-  if (((b*a/num_min) >= 1 || (a*b/num_min)*a <= -1 || (a*b/num_max) >= 1) || (a*b/num_max)*a <= -1){
+  std::cout << (b)*(a/2.0) << " " << a*b << " " << b << " " << num_max/2;
+  if (b*(a/2.0) <= num_min/2.0 || (b)*(a/2.0) >= num_max/2.0){
     throw std::overflow_error("overflow");}
   return mult;
 }
