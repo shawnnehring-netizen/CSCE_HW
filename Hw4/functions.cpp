@@ -77,7 +77,6 @@ int product(int a, int b) {
   long long int num_min = std::numeric_limits<int64_t>::min();
   long long int mult = a * b;
   if ((a*b) < num_min || (a*b) > num_max){
-    throw std::overflow_error("overflow");
-  }
+    throw std::overflow_error("overflow");}
   return mult;
 }
