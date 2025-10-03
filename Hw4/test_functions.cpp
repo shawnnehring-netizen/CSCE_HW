@@ -54,7 +54,7 @@ void test_boxes_needed() {
 
 void test_smarter_section() {
     // smarter_section(40, 50, 75, 100) should return true
-    expect_true(smarter_section(40, 50, 75, 100));
+    expect_true(smarter_section(31, 81, 15, 64));
 }
 
 void test_good_dinner() {
@@ -64,7 +64,7 @@ void test_good_dinner() {
 
 void test_sum_between() {
     // sum_between(1, 10) should return 55
-    expect_eq(sum_between(32581, 57929), 1147168995);
+    expect_eq(sum_between(-2147483648, -2147483648), -2147483648);
 }
 
 void test_product() {

@@ -36,8 +36,10 @@ bool smarter_section(int A_correct, int A_total, int B_correct, int B_total) {
   if (!(A_correct >= 0 && A_total >= 0 && B_correct >= 0 && B_total >= 0)){
     throw std::invalid_argument("invalid input");
   }
-  double multi = B_total / A_total;
-  return (A_correct * multi) > B_correct;}
+  //double B_dob = B_total / 1.0;
+  //double multi = B_dob / A_total;
+  //std::cout << B_dob << " " << A_total << " " << B_total / A_total;
+  return B_correct * A_total  < A_correct * B_total;}
 
 
 bool good_dinner(int pizzas, bool is_weekend) {
@@ -51,7 +53,13 @@ bool good_dinner(int pizzas, bool is_weekend) {
 }
 
 int sum_between(int low, int high) {
-  long int num_max = std::numeric_limits<int32_t>::max();
+  if (high < low){
+    throw std::invalid_argument("invalid argument");
+  }
+  if (high == low){
+    return high;
+  }
+  long int num_max = sstd::numeric_limits<int32_t>::max();
   long int num_min = std::numeric_limits<int32_t>::min();
   long int sum = (low + high);
   long double div_1 = low / 2.0;
