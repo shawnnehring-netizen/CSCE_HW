@@ -40,7 +40,10 @@ int main() {
     // TODO(student): Add code to validate input.
     //                Exit program with error if there are problems with
     //                target_width or target_height
-
+    if (target_width > MAX_WIDTH || target_height > MAX_HEIGHT){
+        cout << "Invalid target dimensions" << endl;
+        return 1;
+    }
     // END input validation. Do not modify code beyond this point.
     cout << "Start image scaling...\n";
     target_image = scale_image(source_image, target_width, target_height);
