@@ -12,7 +12,7 @@ Image load_image(const std::string& file) {
     }
     std::ifstream word_file(file);
     if (word_file.eof()){
-        throw std::runtime_error("Invalid filename");
+        throw std::runtime_error("Failed to read type");
     }
     if (!(word_file.is_open())){
         throw std::runtime_error("Failed to open "+ file);
@@ -28,14 +28,14 @@ Image load_image(const std::string& file) {
     Image newer_image = {};
     Pixel new_pixel = {};
     word_file >> p3;
-    word_file >> width >> height;
-    word_file >> max_color;
     if (!(p3 == "p3" || p3 == "P3")){
         throw std::runtime_error("Invalid type " + p3);
     }
-    if (width > MAX_WIDTH || height > MAX_HEIGHT){
+    word_file >> width >> height;
+    if (width > MAX_WIDTH || height > MAX_HEIGHT || word_file.fail() || width == 0 || height == 0){
         throw std::runtime_error("Invalid dimensions");
     }
+    word_file >> max_color;
     if (max_color < 1 || max_color > 255){
         throw std::runtime_error("Invalid max color");
     }
@@ -60,7 +60,7 @@ Image load_image(const std::string& file) {
     if (count < height*width){
         throw std::runtime_error("Not enough values");
     }
-    if (count > height*width || !(new_image.empty())){
+    if (count > height*width){
         throw std::runtime_error("Too many values");
     }
     std::vector<Pixel> final_sub = {};
@@ -77,12 +77,12 @@ Image load_image(const std::string& file) {
 void output_image(const std::string& file,
                   const Image& pict) {
     std::string line = ""; 
-    std::ofstream word_file(file);
-    if (pict.size() == 0){
-        throw std::invalid_argument("Invalid image");
-    }
-    if (word_file.eof()){
+    if (file == ""){
         throw std::invalid_argument("Invalid filename");
+    }
+    std::ofstream word_file(file);
+    if (pict.empty()){
+        throw std::invalid_argument("Invalid image");
     }
     if (!(word_file.is_open())){
         throw std::invalid_argument("Failed to open "+ file);
@@ -103,11 +103,11 @@ double map_coordinates(size_t s_dim,
         throw std::invalid_argument("Invalid dimension");
     }
     if (p_cord >= t_dim){
-        throw std::invalid_argument("Invalid coordinate minus");
+        throw std::invalid_argument("Invalid coordinate");
     }
     double coords = (s_dim-1)/(t_dim-1) * p_cord;
     // TODO(student): implement mapping function.
-    return {coords};
+    return coords;
 }
 
 Pixel bicubic_interpolation(const Image& pict,
@@ -117,7 +117,7 @@ Pixel bicubic_interpolation(const Image& pict,
     int y = std::trunc(y_old);
     int width = pict.size();
     int height = pict[0].size();
-    if (pict.size() == 0){
+    if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
     }
     if (x > width || y > height){
@@ -195,16 +195,16 @@ Pixel bicubic_interpolation(const Image& pict,
 Image scale_image(const Image& pict,
                   size_t width,
                   size_t height) {
-    Image new_image(height, std::vector<Pixel>(width));
     int x_cord = 0;
     int y_cord = 0;
-    Pixel pix;
-    if (pict.size() == 0){
+    Pixel pix = {};
+    if (pict.empty()){
         throw std::invalid_argument("Invalid image");
     }
     if ((width > MAX_WIDTH) || (height > MAX_HEIGHT)){
         throw std::invalid_argument("Invalid dimension");
     } 
+    Image new_image(height, std::vector<Pixel>(width));
     for (long unsigned int i = 0; i < pict.size(); i++){
         for (long unsigned int j = 0; j < pict[i].size(); j++){
             //std::cout << "here" << "\n";
