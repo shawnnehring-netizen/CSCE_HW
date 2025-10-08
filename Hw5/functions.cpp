@@ -15,7 +15,7 @@ Image load_image(const std::string& file) {
         throw std::runtime_error("Invalid filename");
     }
     if (!(word_file.is_open())){
-        throw std::runtime_error("Failed to open <filename>");
+        throw std::runtime_error("Failed to open "+ file);
     }
     std::string p3 = "";
     long unsigned int width = 0;
@@ -31,7 +31,7 @@ Image load_image(const std::string& file) {
     word_file >> width >> height;
     word_file >> max_color;
     if (!(p3 == "p3" || p3 == "P3")){
-        throw std::runtime_error("Invalid type <type>");
+        throw std::runtime_error("Invalid type " + p3);
     }
     if (width > MAX_WIDTH || height > MAX_HEIGHT){
         throw std::runtime_error("Invalid dimensions");
@@ -40,6 +40,7 @@ Image load_image(const std::string& file) {
         throw std::runtime_error("Invalid max color");
     }
     long unsigned int step = 0;
+    long unsigned int count = 0;
     while (word_file >> red >> green >> blue){
         if (red < 0 || green < 0 || blue < 0 || red > max_color || green > max_color || blue > max_color){
             throw std::runtime_error("Invalid color value");
@@ -48,6 +49,7 @@ Image load_image(const std::string& file) {
         new_pixel.green = green;
         new_pixel.blue = blue;
         new_image.push_back(new_pixel);
+        count += 1;
         step+=1;
         if (step == width){
             newer_image.push_back(new_image);
@@ -55,10 +57,10 @@ Image load_image(const std::string& file) {
             new_image.clear();
         }
     }
-    if (newer_image.size() < height){
+    if (count < height*width){
         throw std::runtime_error("Not enough values");
     }
-    if (newer_image.size() > height || !(new_image.empty())){
+    if (count > height*width || !(new_image.empty())){
         throw std::runtime_error("Too many values");
     }
     std::vector<Pixel> final_sub = {};
@@ -83,8 +85,7 @@ void output_image(const std::string& file,
         throw std::invalid_argument("Invalid filename");
     }
     if (!(word_file.is_open())){
-        std::string mess = "Failed to open ";
-        throw std::invalid_argument(mess);
+        throw std::invalid_argument("Failed to open "+ file);
     }
     word_file << "P3\n" << pict[0].size() + " " + pict.size() << "\n" << "255\n";
     for (long unsigned int i = 0; i < pict[0].size(); i++){ // Possible problem in not switching rows and columns 
@@ -214,7 +215,7 @@ Image scale_image(const Image& pict,
             pix = bicubic_interpolation(pict, x_cord, y_cord);
             //std::cout << "3" << "\n";
             new_image[i][j] = pix;
-            std::cout << "4" << "\n";
+            //std::cout << "4" << "\n";
         }
     }
     // TODO(student): add loops to calculate scaled images
