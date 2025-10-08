@@ -105,9 +105,8 @@ double map_coordinates(size_t s_dim,
     if (p_cord >= t_dim){
         throw std::invalid_argument("Invalid coordinate");
     }
-    double ds_dim = s_dim /1.0;
-    std::cout << ds_dim << " " <<(t_dim*1.0-1) << " " << p_cord << " " <<(s_dim-1)/(t_dim-1) * p_cord <<"\n";
-    double coords = (s_dim-1)/(t_dim-1) * p_cord;
+    double coords = ((double)s_dim-1)/((double)t_dim-1) * p_cord;
+    //std::cout << (double)s_dim-1 << " " <<((double)t_dim-1) << " " << p_cord << " " << coords <<"\n";
     // TODO(student): implement mapping function.
     return coords;
 }
@@ -122,7 +121,7 @@ Pixel bicubic_interpolation(const Image& pict,
     if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
     }
-    if (x > width || y > height){
+    if (x > height || y > width){
         throw std::invalid_argument("Invalid coordinate");
     }
     // TODO(student): Implement bicubic interpolation
