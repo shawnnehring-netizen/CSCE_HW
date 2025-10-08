@@ -105,7 +105,8 @@ double map_coordinates(size_t s_dim,
     if (p_cord >= t_dim){
         throw std::invalid_argument("Invalid coordinate");
     }
-    std::cout << (s_dim-1) << " " <<(t_dim-1) << " " << p_cord << " " <<(s_dim-1)/(t_dim-1) * p_cord <<"\n";
+    double ds_dim = s_dim /1.0;
+    std::cout << ds_dim << " " <<(t_dim*1.0-1) << " " << p_cord << " " <<(s_dim-1)/(t_dim-1) * p_cord <<"\n";
     double coords = (s_dim-1)/(t_dim-1) * p_cord;
     // TODO(student): implement mapping function.
     return coords;
@@ -205,15 +206,15 @@ Image scale_image(const Image& pict,
     if ((width > MAX_WIDTH) || (height > MAX_HEIGHT)){
         throw std::invalid_argument("Invalid dimension");
     } 
-    Image new_image(height, std::vector<Pixel>(width));
+    Image new_image(width, std::vector<Pixel>(height));
     int old_width = pict[0].size();
     int old_height = pict.size();
     for (long unsigned int i = 0; i < width; i++){
         for (long unsigned int j = 0; j < height; j++){
             //std::cout << "here" << "\n";
-            x_cord = map_coordinates(old_width, width, j);
+            x_cord = map_coordinates(old_width, width, i);
             //std::cout << "1" << "\n";
-            y_cord = map_coordinates(old_height, height, i);
+            y_cord = map_coordinates(old_height, height, j);
             //std::cout << "2" << x_cord << y_cord << "\n";
             pix = bicubic_interpolation(pict, x_cord, y_cord);
             //std::cout << "3" << "\n";
