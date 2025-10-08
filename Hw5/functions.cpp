@@ -176,21 +176,21 @@ Pixel bicubic_interpolation(const Image& pict,
     double rem_x = x_old - x;
     double rem_y = y_old - y;
     for (int j = 0; j < 4; j++){
-        std::cout << "a" << x_0 << y_values[j] <<  "\n";
+        //std::cout << "a" << x_0 << y_values[j] <<  "\n";
         //Pixel count1x = pict[y_values[j]][x_0];
         Pixel count1x = pict[x_0][y_values[j]];
-        std::cout << "b" << x_1 << y_values[j] << "\n";
+        //std::cout << "b" << x_1 << y_values[j] << "\n";
         //Pixel count2x = pict[y_values[j]][x_1];
         Pixel count2x = pict[x_1][y_values[j]];
-        std::cout << "c" << x_2 << y_values[j] << "\n";
+        //std::cout << "c" << x_2 << y_values[j] << "\n";
         //Pixel count3x = pict[y_values[j]][x_2];
         Pixel count3x = pict[x_2][y_values[j]];
-        std::cout << "d" << x_3 << y_values[j] << "\n";
+        //std::cout << "d" << x_3 << y_values[j] << "\n";
         //Pixel count4x = pict[y_values[j]][x_3];
         Pixel count4x = pict[x_3][y_values[j]];
-        std::cout << "e" << x_0 << y_values[j] << "\n";
+        //std::cout << "e" << x_0 << y_values[j] << "\n";
         Pixel x1 = bicubic_pixel(rem_x, count1x, count2x, count3x, count4x);
-        std::cout << "f" << x_old << y_old << "\n";
+        //std::cout << "f" << x_old << y_old << "\n";
         x_pixels.push_back(x1);
     }
     Pixel color = bicubic_pixel(rem_y, x_pixels[3], x_pixels[2], x_pixels[1], x_pixels[0]);
