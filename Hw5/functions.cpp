@@ -48,12 +48,12 @@ Image load_image(const std::string& file) {
         new_pixel.green = green;
         new_pixel.blue = blue;
         new_image.push_back(new_pixel);
+        step+=1;
         if (step == width){
             newer_image.push_back(new_image);
             step = 0;
             new_image.clear();
         }
-        step+=1;
     }
     if (newer_image.size() < height){
         throw std::runtime_error("Not enough values");
@@ -102,7 +102,7 @@ double map_coordinates(size_t s_dim,
         throw std::invalid_argument("Invalid dimension");
     }
     if (p_cord >= t_dim){
-        throw std::invalid_argument("Invalid coordinate");
+        throw std::invalid_argument("Invalid coordinate minus");
     }
     double coords = (s_dim-1)/(t_dim-1) * p_cord;
     // TODO(student): implement mapping function.
@@ -110,27 +110,81 @@ double map_coordinates(size_t s_dim,
 }
 
 Pixel bicubic_interpolation(const Image& pict,
-                            double x,
-                            double y) {
+                            double x_old,
+                            double y_old) {
+    int x = std::trunc(x_old);
+    int y = std::trunc(y_old);
+    int width = pict.size();
+    int height = pict[0].size();
     if (pict.size() == 0){
         throw std::invalid_argument("Invalid image");
     }
-    if (x > pict.size() || y > pict[0].size()){
-        throw std::invalid_argument("Invalid coordinate");
+    if (x > width || y > height){
+        throw std::invalid_argument("Invalid coordinate plus");
     }
     // TODO(student): Implement bicubic interpolation
+    int x_0 = 0;
+    int x_1 = x;
+    int x_2 = 0;
+    int x_3 = 0;
+    if (x < 1){
+        x_0 = x;
+    }
+    else {
+        x_0 = x - 1;
+    }
+    if (x > width){
+        x_2 = x;
+    }
+    else {
+        x_2 = x + 1;
+    }
+    if (x > width -1){
+        x_3 = x + 1;
+    }
+    else {
+        x_3 = x + 2;
+    }
 
-    double new_x = x/2.0;
-    double new_y = y/2.0;
+    int y_0 = 0;
+    int y_1 = y;
+    int y_2 = 0;
+    int y_3 = 0;
+    if (y < 1){
+        y_0 = y;
+    }
+    else {
+        y_0 = y - 1;
+    }
+    if (y > height){
+        y_2 = y;
+    }
+    else {
+        y_2 = y + 1;
+    }
+    if (y > height){
+        y_3 = y + 1;
+    }
+    else {
+        y_3 = y + 2;
+    }
     std::vector<Pixel> x_pixels = {};
-    double rem_x = new_x - x/2;
-    double rem_y = new_y - y/2;
+    std::vector<int> y_values = {y_0, y_1, y_2, y_3};
+    std::vector<int> x_values = {x_0, x_1, x_2, x_3};
+    double rem_x = x_old - x;
+    double rem_y = y_old - y;
     for (int j = 0; j < 4; j++){
-        Pixel count1x = pict[x/2-1][new_y-1+j];
-        Pixel count2x = pict[x/2][new_y-1+j];
-        Pixel count3x = pict[x/2+1][new_y-1+j];
-        Pixel count4x = pict[x/2+2][new_y-1+j];
+        //std::cout << "a" << x_0 << y_values[j] <<  "\n";
+        Pixel count1x = pict[x_0][y_values[j]];
+        //std::cout << "b" << x_1 << y_values[j] << "\n";
+        Pixel count2x = pict[x_1][y_values[j]];
+        //std::cout << "c" << x_2 << y_values[j] << "\n";
+        Pixel count3x = pict[x_2][y_values[j]];
+        //std::cout << "d" << x_3 << y_values[j] << "\n";
+        Pixel count4x = pict[x_3][y_values[j]];
+        //std::cout << "e" << x_0 << y_values[j] << "\n";
         Pixel x1 = bicubic_pixel(rem_x, count1x, count2x, count3x, count4x);
+        //std::cout << "f" << x_old << y_old << "\n";
         x_pixels.push_back(x1);
     }
     Pixel color = bicubic_pixel(rem_y, x_pixels[0], x_pixels[1], x_pixels[2], x_pixels[3]);
@@ -140,22 +194,27 @@ Pixel bicubic_interpolation(const Image& pict,
 Image scale_image(const Image& pict,
                   size_t width,
                   size_t height) {
-    Image new_image = {};
+    Image new_image(height, std::vector<Pixel>(width));
     int x_cord = 0;
     int y_cord = 0;
     Pixel pix;
     if (pict.size() == 0){
         throw std::invalid_argument("Invalid image");
     }
-    if ((width > 0 && width <= MAX_WIDTH) || (height > 0 && height <= MAX_HEIGHT)){
+    if ((width > MAX_WIDTH) || (height > MAX_HEIGHT)){
         throw std::invalid_argument("Invalid dimension");
     } 
     for (long unsigned int i = 0; i < pict.size(); i++){
         for (long unsigned int j = 0; j < pict[i].size(); j++){
+            //std::cout << "here" << "\n";
             x_cord = map_coordinates(pict[i].size(), width, j);
+            //std::cout << "1" << "\n";
             y_cord = map_coordinates(pict.size(), height, i);
+            //std::cout << "2" << x_cord << y_cord << "\n";
             pix = bicubic_interpolation(pict, x_cord, y_cord);
+            //std::cout << "3" << "\n";
             new_image[i][j] = pix;
+            std::cout << "4" << "\n";
         }
     }
     // TODO(student): add loops to calculate scaled images
