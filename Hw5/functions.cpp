@@ -192,7 +192,7 @@ Pixel bicubic_interpolation(const Image& pict,
         //std::cout << "f" << x_old << y_old << "\n";
         x_pixels.push_back(x1);
     }
-    Pixel color = bicubic_pixel(rem_y, x_pixels[3], x_pixels[2], x_pixels[1], x_pixels[0]);
+    Pixel color = bicubic_pixel(rem_y, x_pixels[0], x_pixels[1], x_pixels[2], x_pixels[3]);
     return {color};
 }
 
