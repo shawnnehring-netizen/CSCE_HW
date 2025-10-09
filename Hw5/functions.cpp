@@ -140,10 +140,10 @@ Pixel bicubic_interpolation(const Image& pict,
     else {
         x_0 = x - 1;
     }
-    if (x+1 >= height){
+    if (x+1 >= width){
         x_2 = x;
         x_3 = x;}
-    else if (x + 2 >= height){
+    else if (x + 2 >= width){
         x_3 = x + 1;
         x_2 = x + 1;
     }
@@ -205,7 +205,7 @@ Image scale_image(const Image& pict,
     if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
     }
-    if ((width > MAX_WIDTH) || (height > MAX_HEIGHT)){
+    if ((width > MAX_WIDTH) || width < 1 || (height > MAX_HEIGHT) || height < 1){
         throw std::invalid_argument("Invalid dimension");
     } 
     Image new_image(width, std::vector<Pixel>(height)); // does it count 0-40 not including 40 so do i need to add 1
