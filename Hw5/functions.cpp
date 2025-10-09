@@ -11,7 +11,7 @@ Image load_image(const std::string& file) {
         throw std::runtime_error("Invalid filename");
     }
     std::ifstream word_file(file);
-    if (word_file.eof()){
+    if (word_file.peek()==EOF){
         throw std::runtime_error("Failed to read type");
     }
     if (!(word_file.is_open())){
@@ -39,16 +39,19 @@ Image load_image(const std::string& file) {
     if (max_color < 1 || max_color > 255){
         throw std::runtime_error("Invalid max color");
     }
-    std::cout << max_color << " " << width << " " << height << " " << p3 << "\n";
+    //std::cout << max_color << " " << width << " " << height << " " << p3 << "\n";
     long unsigned int step = 0;
     long unsigned int count = 0;
     while (word_file >> red >> green >> blue){
         if (red < 0 || green < 0 || blue < 0 || red > max_color || green > max_color || blue > max_color){
             throw std::runtime_error("Invalid color value");
         }
+        //std::cout << red << " " << green << " " << blue << "\n";
+        //std::cout << (uint8_t)red << " " << (uint8_t)green << " " << (uint8_t)blue << "\n";
         new_pixel.red = red;
         new_pixel.green = green;
         new_pixel.blue = blue;
+        //std::cout << new_pixel.red << " " << new_pixel.green << " " << new_pixel.blue << "\n";
         new_image.push_back(new_pixel);
         count += 1;
         step+=1;
@@ -61,16 +64,15 @@ Image load_image(const std::string& file) {
     if (count < height*width){
         throw std::runtime_error("Not enough values");
     }
-    if (count > height*width){
+    int more = 0;
+    if (count > height*width || word_file >> more){
         throw std::runtime_error("Too many values");
     }
-    std::vector<Pixel> final_sub = {};
-    Image final_image = {};
+    Image final_image(width, std::vector<Pixel>(height));
     for (long unsigned int i = 0; i < width; i++){
         for (long unsigned int j = 0; j < height; j++){
-            final_sub.push_back(newer_image[j][i]);
+            final_image[i][j] = newer_image[j][i];
         }
-        final_image.push_back(final_sub);
     }
     return {final_image};
 }
