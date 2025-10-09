@@ -123,10 +123,10 @@ Pixel bicubic_interpolation(const Image& pict,
     int y = std::trunc(y_old);
     int width = pict.size();
     int height = pict[0].size();
-    if (pict.size() == 0 || pict[0].size() == 0){
+    if (width == 0 || height == 0){
         throw std::invalid_argument("Invalid image");
     }
-    if (x >= width || y >= height){
+    if (x >= width || x < 0 || y >= height || y < 0){
         throw std::invalid_argument("Invalid coordinate - ");
     }
     // TODO(student): Implement bicubic interpolation
@@ -214,12 +214,13 @@ Image scale_image(const Image& pict,
     for (long unsigned int i = 0; i < width; i++){
         for (long unsigned int j = 0; j < height; j++){
             //std::cout << "here" << "\n";
-            x_cord = map_coordinates(old_width, width, i);
+            y_cord = map_coordinates(old_width, width, i);
             //std::cout << "1" << "\n";
-            y_cord = map_coordinates(old_height, height, j);
+            x_cord = map_coordinates(old_height, height, j);
             //std::cout << "2" << x_cord << y_cord << "\n";
             pix = bicubic_interpolation(pict, x_cord, y_cord);
             //std::cout << "3" << "\n";
+            std::cout << pix.red << " " << pix.green << " " << pix.blue << "\n";
             new_image[i][j] = pix;
             //std::cout << "4" << "\n";
         }
