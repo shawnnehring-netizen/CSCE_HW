@@ -48,13 +48,13 @@ Image load_image(const std::string& file) {
         }
         if (color_count == 0){
             new_pixel.red = color;
-            color_count +=1 ;
+            color_count +=1;
         }
-        if (color_count == 1){
+        else if (color_count == 1){
             new_pixel.green = color;
             color_count +=1 ;
         }
-        if (color_count == 2){
+        else if (color_count == 2){
             new_pixel.blue = color;
             step+=1;
             new_image.push_back(new_pixel);
@@ -65,7 +65,6 @@ Image load_image(const std::string& file) {
             newer_image.push_back(new_image);
             step = 0;
             new_image.clear();
-        
         }
         count+=1;
     }
@@ -128,11 +127,11 @@ Pixel bicubic_interpolation(const Image& pict,
                             double y_old) {
     int x = std::trunc(x_old);
     int y = std::trunc(y_old);
-    int width = pict.size();
-    int height = pict[0].size();
-    if (width == 0 || height == 0){
+    if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
     }
+    int width = pict.size();
+    int height = pict[0].size();
     if (x >= width || x < 0 || y >= height || y < 0){
         throw std::invalid_argument("Invalid coordinate - ");
     }
