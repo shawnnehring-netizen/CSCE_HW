@@ -39,6 +39,7 @@ Image load_image(const std::string& file) {
     if (max_color < 1 || max_color > 255){
         throw std::runtime_error("Invalid max color");
     }
+    std::cout << max_color << " " << width << " " << height << " " << p3 << "\n";
     long unsigned int step = 0;
     long unsigned int count = 0;
     while (word_file >> red >> green >> blue){
@@ -87,9 +88,11 @@ void output_image(const std::string& file,
     if (!(word_file.is_open())){
         throw std::invalid_argument("Failed to open "+ file);
     }
-    word_file << "P3\n" << pict[0].size() + " " + pict.size() << "\n" << "255\n";
-    for (long unsigned int i = 0; i < pict[0].size(); i++){ // Possible problem in not switching rows and columns 
-        for (long unsigned int j = 0; j < pict.size(); j++){ //SHOULD BE TRANSPOSED NOW
+    int width = pict.size();
+    int height = pict[0].size();
+    word_file << "P3\n" << width << " " << height << "\n" << "255\n";
+    for (int i = 0; i < width; i++){ // Possible problem in not switching rows and columns 
+        for (int j = 0; j < height; j++){ //SHOULD BE TRANSPOSED NOW
             word_file << pict[i][j].red << " " << pict[i][j].green << " " << pict[i][j].blue << "\n";
         }
     }
@@ -121,8 +124,8 @@ Pixel bicubic_interpolation(const Image& pict,
     if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
     }
-    if (x > height || y > width){
-        throw std::invalid_argument("Invalid coordinate");
+    if (x > width || y > height){
+        throw std::invalid_argument("Invalid coordinate - ");
     }
     // TODO(student): Implement bicubic interpolation
     int x_0 = 0;
@@ -135,16 +138,15 @@ Pixel bicubic_interpolation(const Image& pict,
     else {
         x_0 = x - 1;
     }
-    if (x > height){
+    if (x+1 > height){
         x_2 = x;
+        x_3 = x;}
+    else if (x + 2 > height){
+        x_3 = x + 1;
+        x_2 = x + 1;
     }
     else {
         x_2 = x + 1;
-    }
-    if (x > height-1){
-        x_3 = x + 1;
-    }
-    else {
         x_3 = x + 2;
     }
 
@@ -158,16 +160,15 @@ Pixel bicubic_interpolation(const Image& pict,
     else {
         y_0 = y - 1;
     }
-    if (y > width){
+    if (y+1 > height){
         y_2 = y;
+        y_3 = y;}
+    else if (y + 2 > height){
+        y_3 = y + 1;
+        y_2 = y + 1;
     }
     else {
         y_2 = y + 1;
-    }
-    if (y > width){
-        y_3 = y + 1;
-    }
-    else {
         y_3 = y + 2;
     }
     std::vector<Pixel> x_pixels = {};
@@ -177,16 +178,12 @@ Pixel bicubic_interpolation(const Image& pict,
     double rem_y = y_old - y;
     for (int j = 0; j < 4; j++){
         //std::cout << "a" << x_0 << y_values[j] <<  "\n";
-        //Pixel count1x = pict[y_values[j]][x_0];
         Pixel count1x = pict[x_0][y_values[j]];
         //std::cout << "b" << x_1 << y_values[j] << "\n";
-        //Pixel count2x = pict[y_values[j]][x_1];
         Pixel count2x = pict[x_1][y_values[j]];
         //std::cout << "c" << x_2 << y_values[j] << "\n";
-        //Pixel count3x = pict[y_values[j]][x_2];
         Pixel count3x = pict[x_2][y_values[j]];
         //std::cout << "d" << x_3 << y_values[j] << "\n";
-        //Pixel count4x = pict[y_values[j]][x_3];
         Pixel count4x = pict[x_3][y_values[j]];
         //std::cout << "e" << x_0 << y_values[j] << "\n";
         Pixel x1 = bicubic_pixel(rem_x, count1x, count2x, count3x, count4x);
@@ -209,9 +206,9 @@ Image scale_image(const Image& pict,
     if ((width > MAX_WIDTH) || (height > MAX_HEIGHT)){
         throw std::invalid_argument("Invalid dimension");
     } 
-    Image new_image(width, std::vector<Pixel>(height));
-    int old_width = pict[0].size();
-    int old_height = pict.size();
+    Image new_image(width, std::vector<Pixel>(height)); // does it count 0-40 not including 40 so do i need to add 1
+    int old_width = pict.size();
+    int old_height = pict[0].size();
     for (long unsigned int i = 0; i < width; i++){
         for (long unsigned int j = 0; j < height; j++){
             //std::cout << "here" << "\n";
