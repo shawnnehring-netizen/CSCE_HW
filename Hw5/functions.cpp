@@ -11,6 +11,7 @@ Image load_image(const std::string& file) {
         throw std::runtime_error("Invalid filename");
     }
     std::ifstream word_file(file);
+    std::ifstream too_much(file);
     if (!(word_file.is_open())){
         throw std::runtime_error("Failed to open "+ file);
     }
@@ -21,9 +22,7 @@ Image load_image(const std::string& file) {
     long unsigned int width = 0;
     long unsigned int height = 0;
     int max_color = 0;
-    int red = 0;
-    int blue = 0;
-    int green = 0;
+    int color = 0;
     std::vector<Pixel> new_image = {};
     Image newer_image = {};
     Pixel new_pixel = {};
@@ -41,31 +40,39 @@ Image load_image(const std::string& file) {
     }
     //std::cout << max_color << " " << width << " " << height << " " << p3 << "\n";
     long unsigned int step = 0;
+    long unsigned int color_count = 0;
     long unsigned int count = 0;
-    while (word_file >> red >> green >> blue){
-        if (red < 0 || green < 0 || blue < 0 || red > max_color || green > max_color || blue > max_color){
+    while (word_file >> color){
+        if (color < 0 || color > max_color){
             throw std::runtime_error("Invalid color value");
         }
-        //std::cout << red << " " << green << " " << blue << "\n";
-        //std::cout << (uint8_t)red << " " << (uint8_t)green << " " << (uint8_t)blue << "\n";
-        new_pixel.red = red;
-        new_pixel.green = green;
-        new_pixel.blue = blue;
+        if (color_count == 0){
+            new_pixel.red = color;
+            color_count +=1 ;
+        }
+        if (color_count == 1){
+            new_pixel.green = color;
+            color_count +=1 ;
+        }
+        if (color_count == 2){
+            new_pixel.blue = color;
+            step+=1;
+            new_image.push_back(new_pixel);
+            color_count = 0;
+        }
         //std::cout << new_pixel.red << " " << new_pixel.green << " " << new_pixel.blue << "\n";
-        new_image.push_back(new_pixel);
-        count += 1;
-        step+=1;
         if (step == width){
             newer_image.push_back(new_image);
             step = 0;
             new_image.clear();
+        
         }
+        count+=1;
     }
-    if (count < height*width){
+    if (count < height*width*3){
         throw std::runtime_error("Not enough values");
     }
-    int more = 0;
-    if (count > height*width || word_file >> more){
+    if (count > height*width*3){
         throw std::runtime_error("Too many values");
     }
     Image final_image(width, std::vector<Pixel>(height));
