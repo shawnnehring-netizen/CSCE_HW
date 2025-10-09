@@ -199,8 +199,8 @@ Pixel bicubic_interpolation(const Image& pict,
 Image scale_image(const Image& pict,
                   size_t width,
                   size_t height) {
-    int x_cord = 0;
-    int y_cord = 0;
+    double x_cord = 0;
+    double y_cord = 0;
     Pixel pix = {};
     if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
@@ -214,9 +214,9 @@ Image scale_image(const Image& pict,
     for (long unsigned int i = 0; i < width; i++){
         for (long unsigned int j = 0; j < height; j++){
             //std::cout << "here" << "\n";
-            y_cord = map_coordinates(old_width, width, i);
+            x_cord = map_coordinates(old_width, width, i);
             //std::cout << "1" << "\n";
-            x_cord = map_coordinates(old_height, height, j);
+            y_cord = map_coordinates(old_height, height, j);
             //std::cout << "2" << x_cord << y_cord << "\n";
             pix = bicubic_interpolation(pict, x_cord, y_cord);
             //std::cout << "3" << "\n";
