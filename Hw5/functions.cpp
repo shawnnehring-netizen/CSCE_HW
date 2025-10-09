@@ -93,7 +93,7 @@ void output_image(const std::string& file,
     int width = pict.size();
     int height = pict[0].size();
     Image final_one(width, std::vector<Pixel>(height));
-    word_file << "P3\n" << width << " " << height << "\n" << "255\n";
+    word_file << "P3\n" << width << " " << height << "\n" << "255" << "\n";
     for (int i = 0; i < height; i++){ // Possible problem in not switching rows and columns 
         for (int j = 0; j < width; j++){ //SHOULD BE TRANSPOSED NOW
             word_file << pict[j][i].red << " " << pict[j][i].green << " " << pict[j][i].blue << "\n";
