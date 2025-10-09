@@ -126,7 +126,7 @@ Pixel bicubic_interpolation(const Image& pict,
     if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
     }
-    if (x > width || y > height){
+    if (x >= width || y >= height){
         throw std::invalid_argument("Invalid coordinate - ");
     }
     // TODO(student): Implement bicubic interpolation
@@ -140,10 +140,10 @@ Pixel bicubic_interpolation(const Image& pict,
     else {
         x_0 = x - 1;
     }
-    if (x+1 > height){
+    if (x+1 >= height){
         x_2 = x;
         x_3 = x;}
-    else if (x + 2 > height){
+    else if (x + 2 >= height){
         x_3 = x + 1;
         x_2 = x + 1;
     }
@@ -162,10 +162,10 @@ Pixel bicubic_interpolation(const Image& pict,
     else {
         y_0 = y - 1;
     }
-    if (y+1 > height){
+    if (y+1 >= height){
         y_2 = y;
         y_3 = y;}
-    else if (y + 2 > height){
+    else if (y + 2 >= height){
         y_3 = y + 1;
         y_2 = y + 1;
     }
@@ -202,7 +202,7 @@ Image scale_image(const Image& pict,
     int x_cord = 0;
     int y_cord = 0;
     Pixel pix = {};
-    if (pict.empty()){
+    if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
     }
     if ((width > MAX_WIDTH) || (height > MAX_HEIGHT)){
