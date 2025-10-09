@@ -133,7 +133,7 @@ Pixel bicubic_interpolation(const Image& pict,
     int width = pict.size();
     int height = pict[0].size();
     if (x >= width || x < 0 || y >= height || y < 0){
-        throw std::invalid_argument("Invalid coordinate - ");
+        throw std::invalid_argument("Invalid coordinate");
     }
     // TODO(student): Implement bicubic interpolation
     int x_0 = 0;
