@@ -92,9 +92,10 @@ void output_image(const std::string& file,
     }
     int width = pict.size();
     int height = pict[0].size();
+    Image final_one(width, std::vector<Pixel>(height));
     word_file << "P3\n" << width << " " << height << "\n" << "255\n";
-    for (int i = 0; i < width; i++){ // Possible problem in not switching rows and columns 
-        for (int j = 0; j < height; j++){ //SHOULD BE TRANSPOSED NOW
+    for (int i = 0; i < height; i++){ // Possible problem in not switching rows and columns 
+        for (int j = 0; j < width; j++){ //SHOULD BE TRANSPOSED NOW
             word_file << pict[j][i].red << " " << pict[j][i].green << " " << pict[j][i].blue << "\n";
         }
     }
@@ -220,7 +221,6 @@ Image scale_image(const Image& pict,
             //std::cout << "2" << x_cord << y_cord << "\n";
             pix = bicubic_interpolation(pict, x_cord, y_cord);
             //std::cout << "3" << "\n";
-            std::cout << pix.red << " " << pix.green << " " << pix.blue << "\n";
             new_image[i][j] = pix;
             //std::cout << "4" << "\n";
         }
