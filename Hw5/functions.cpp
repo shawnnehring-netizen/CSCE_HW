@@ -11,11 +11,11 @@ Image load_image(const std::string& file) {
         throw std::runtime_error("Invalid filename");
     }
     std::ifstream word_file(file);
-    if (word_file.peek()==EOF){
-        throw std::runtime_error("Failed to read type");
-    }
     if (!(word_file.is_open())){
         throw std::runtime_error("Failed to open "+ file);
+    }
+    if (word_file.peek()==EOF){
+        throw std::runtime_error("Failed to read type");
     }
     std::string p3 = "";
     long unsigned int width = 0;
@@ -84,7 +84,7 @@ void output_image(const std::string& file,
         throw std::invalid_argument("Invalid filename");
     }
     std::ofstream word_file(file);
-    if (pict.empty()){
+    if (pict.size() == 0 || pict[0].size() == 0){
         throw std::invalid_argument("Invalid image");
     }
     if (!(word_file.is_open())){
@@ -95,7 +95,7 @@ void output_image(const std::string& file,
     word_file << "P3\n" << width << " " << height << "\n" << "255\n";
     for (int i = 0; i < width; i++){ // Possible problem in not switching rows and columns 
         for (int j = 0; j < height; j++){ //SHOULD BE TRANSPOSED NOW
-            word_file << pict[i][j].red << " " << pict[i][j].green << " " << pict[i][j].blue << "\n";
+            word_file << pict[j][i].red << " " << pict[j][i].green << " " << pict[j][i].blue << "\n";
         }
     }
     // TODO(student): implement writing image to file
