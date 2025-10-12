@@ -10,8 +10,8 @@ double error_calculation(const Image& image_1,
                          const Corner& point_1, 
                          const Image& image_2,
                          const Corner& point_2) {
-    std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE, ERROR_NEIGHBORHOOD_SIZE);
-    std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE, ERROR_NEIGHBORHOOD_SIZE);
+    std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE);
+    std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE);
     for (int i = 0; i < ERROR_NEIGHBORHOOD_SIZE, i++;){
         for (int j = 0; j < ERROR_NEIGHBORHOOD_SIZE, j++;);{
             first_numbers.push_back(image_1[point_1.x-(ERROR_NEIGHBORHOOD_SIZE/2)+i][point_1.y-(ERROR_NEIGHBORHOOD_SIZE/2)+j]);
