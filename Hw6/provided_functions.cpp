@@ -229,7 +229,7 @@ std::vector<std::vector<double>> transform_estimation(const std::vector<CornerPa
             }
         }
         catch(...) {
-            std::cout << "catch and ignore singularity\n";
+            //std::cout << "catch and ignore singularity\n";
         }
 
         if (best_inlier_count > ((2*n)/3)) {

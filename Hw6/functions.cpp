@@ -57,44 +57,48 @@ std::vector<CornerPair> match_corners(const Image& image_1,
     for (long unsigned int i = 0; i < corner_1.size(); i++){
         for (long unsigned int j = 0; j < corner_2.size(); j++){
             //std::cout << "igu" << "\n";
-            if (corner_1[i].x < (image_1.size()/2)){
+            if (corner_1[i].x <= (image_1.size()/2)){
                 errors[i][j] = INFINITY;
                 continue;
             }
-            if (corner_2[j].x > (image_2.size()/2)){
+            if (corner_2[j].x >= (image_2.size()/2)){
                 errors[i][j] = INFINITY;
                 continue;
             } 
-            if (((int)corner_1[i].y - (int)corner_2[j].y) > 100 || ((int)corner_1[i].y - (int)corner_2[j].y) < -100){
+            if (((int)corner_1[i].y - (int)corner_2[j].y) >= 100 || ((int)corner_1[i].y - (int)corner_2[j].y) <= -100){
                 errors[i][j] = INFINITY;
                 continue;
             }
             //std::cout << "silly" << "\n";
             error = error_calculation(image_1,corner_1[i],image_2,corner_2[j]);
             errors[i][j] = error;
-            count += 1;
-        }
+            if (error != INFINITY){
+                count += 1;
+            }
+        }   
     }
     std::cout << errors.size() << " " << errors[0].size() << " " << count << "\n";
     double lowest = 0;
     double minimum = 0;
     std::vector<double> lowest_nums = {};
+    count = 0;
     while (lowest != INFINITY){
-        lowest = INFINITY;
         //std::cout << "silly" << "\n";
+        lowest = INFINITY;
         for (long unsigned int i = 0; i < errors.size(); i++){
             for (long unsigned int j = 0; j < errors[i].size(); j++){
-                if (errors[i][j] < lowest && errors[i][j] > minimum){
+                if (errors[i][j] < lowest){
                     lowest = errors[i][j];
                 }
             }
-        }
-        if (lowest != INFINITY){
-            lowest_nums.push_back(lowest);
-            minimum = lowest;
+            if (lowest != INFINITY){
+                lowest_nums.push_back(lowest);
+                minimum = lowest;
+                count +=1;}
         }
     }
     std::vector<CornerPair> final_pairs = {};
+    std::cout << count << "\n";
     CornerPair fin_corn = {};
     for (long unsigned int k = 0; k < lowest_nums.size(); k++){
         for (long unsigned int i = 0; i < errors.size(); i++){
@@ -152,7 +156,7 @@ Image merge_images(const Image& image_1,
                 I1_pixel = image_1[i][j];
                 I1 = true;
             }
-            if (map_x < image_2.size() && map_y < image_2[0].size()){
+            if (map_x < image_2.size() || map_y < image_2[0].size()){
                 I2_pixel = bicubic_interpolation(image_2,map_x, map_y);
                 I2 = true;
             }
