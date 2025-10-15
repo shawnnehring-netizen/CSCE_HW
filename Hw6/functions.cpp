@@ -13,7 +13,7 @@ double error_calculation(const Image& image_1,
     std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE);
     std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE);
     long unsigned int block = ERROR_NEIGHBORHOOD_SIZE/2;
-    if (point_1.x < block || (point_1.x + block) > image_1.size() || point_2.x < block || (point_2.x + block) > image_2.size() || point_1.y < block || (point_1.y + block) > image_1[0].size() || point_2.x < block || (point_2.x + block) > image_2.size()){
+    if (point_1.x < block || (point_1.x + block) >= image_1.size() || point_2.x < block || (point_2.x + block) >= image_2.size() || point_1.y < block || (point_1.y + block) >= image_1[0].size() || point_2.x < block || (point_2.x + block) >= image_2.size()){
         return INFINITY;}
     int x_value_1= 0;
     int y_value_1=0;
@@ -139,8 +139,8 @@ Image merge_images(const Image& image_1,
     int width = image_1.size() * 1.75;
     int height = image_1[0].size() * 1.5;
     Image tran_image(width, std::vector<Pixel>(height));
-    for (int i = 0; i < width; i++){
-        for (int j = 0; j < height; j++){
+    for (long unsigned int i = 0; i < tran_image.size(); i++){
+        for (long unsigned int j = 0; j < tran_image[i].size(); j++){
             Pixel I1_pixel = {};
             Pixel I2_pixel = {};
             double map_x = 0;
@@ -150,8 +150,8 @@ Image merge_images(const Image& image_1,
             bool I2 = false;
 
             map_coordinates(tran_matr, i, j, map_x, map_y);
-            if (map_x < image_1.size() && map_y < image_1[0].size()){
-                I1_pixel = bicubic_interpolation(image_1,map_x, map_y);
+            if (i < image_1.size() && j < image_1[0].size()){
+                I1_pixel = image_1[i][j];
                 I1 = true;
             }
             if (map_x < image_2.size() && map_y < image_2[0].size()){
