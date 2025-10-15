@@ -13,7 +13,7 @@ double error_calculation(const Image& image_1,
     std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE);
     std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE);
     long unsigned int block = ERROR_NEIGHBORHOOD_SIZE/2;
-    if (point_1.x < block || (image_1.size()-point_1.x) < block || point_2.x < block || (image_2.size()-point_2.x) < block || point_1.y < block || (image_1[0].size()-point_1.y) < block || point_2.x < block || (image_2.size()-point_2.x) < block){
+    if (point_1.x < block || (point_1.x + block) < image_1.size() || point_2.x < block || (point_2.x + block) > image_2.size() || point_1.y < block || (point_1.y + block) < image_1[0].size() || point_2.x < block || (point_2.x + block) > image_2.size()){
         return INFINITY;}
     int x_value_1= 0;
     int y_value_1=0;
@@ -80,9 +80,9 @@ std::vector<CornerPair> match_corners(const Image& image_1,
         while (lowest != INFINITY){
             for (long unsigned int i = 0; i < errors.size(); i++){
                 for (long unsigned int j = 0; j < errors[i].size(); j++){
-                if (errors[i][j] < lowest && errors[i][j] > minimum){
-                    lowest = errors[i][j];
-                }
+                    if (errors[i][j] < lowest && errors[i][j] > minimum){
+                        lowest = errors[i][j];
+                    }
                 }
             }
             if (lowest != INFINITY){
@@ -96,11 +96,11 @@ std::vector<CornerPair> match_corners(const Image& image_1,
         for (long unsigned int k = 0; k < lowest_nums.size(); k++){
             for (long unsigned int i = 0; i < errors.size(); i++){
                 for (long unsigned int j = 0; j < errors[i].size(); j++){
-                if (lowest_nums[k] == errors[i][j]){
-                    fin_corn.image1_corner = corner_1[i];
-                    fin_corn.image2_corner = corner_2[j];
-                    final_pairs.push_back(fin_corn);
-                }
+                    if (lowest_nums[k] == errors[i][j]){
+                        fin_corn.image1_corner = corner_1[i];
+                        fin_corn.image2_corner = corner_2[j];
+                        final_pairs.push_back(fin_corn);
+                    }
                 }
             }    
         }
