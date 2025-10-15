@@ -13,7 +13,7 @@ double error_calculation(const Image& image_1,
     std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE);
     std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE);
     long unsigned int block = ERROR_NEIGHBORHOOD_SIZE/2;
-    if (point_1.x < block || (point_1.x + block) < image_1.size() || point_2.x < block || (point_2.x + block) > image_2.size() || point_1.y < block || (point_1.y + block) < image_1[0].size() || point_2.x < block || (point_2.x + block) > image_2.size()){
+    if (point_1.x < block || (point_1.x + block) > image_1.size() || point_2.x < block || (point_2.x + block) > image_2.size() || point_1.y < block || (point_1.y + block) > image_1[0].size() || point_2.x < block || (point_2.x + block) > image_2.size()){
         return INFINITY;}
     int x_value_1= 0;
     int y_value_1=0;
@@ -50,60 +50,62 @@ std::vector<CornerPair> match_corners(const Image& image_1,
                                       const std::vector<Corner>& corner_1,
                                       const Image& image_2,
                                       const std::vector<Corner>& corner_2) {
-        std::cout << "blah" << "\n";
-        std::vector<CornerPair> final_corn = {};
-        std::vector<std::vector<double>> errors(corner_1.size(), std::vector<double>(corner_2.size()));
-        double error = 0;
-        for (long unsigned int i = 0; i < corner_1.size(); i++){
-            for (long unsigned int j = 0; j < corner_2.size(); j++){
-                //std::cout << "igu" << "\n";
-                if (corner_1[i].x < image_1.size()/2){
-                    errors[i][j] = INFINITY;
-                    continue;
+    std::vector<CornerPair> final_corn = {};
+    std::vector<std::vector<double>> errors(corner_1.size(), std::vector<double>(corner_2.size()));
+    double error = 0;
+    for (long unsigned int i = 0; i < corner_1.size(); i++){
+        for (long unsigned int j = 0; j < corner_2.size(); j++){
+            //std::cout << "igu" << "\n";
+            if (corner_1[i].x < image_1.size()/2){
+                errors[i][j] = INFINITY;
+                continue;
+            }
+            if (corner_2[j].x > image_2.size()/2){
+                errors[i][j] = INFINITY;
+                continue;
+            } 
+            if (corner_1[i].y - corner_2[j].y >= 100 || (int)corner_1[i].y - (int)corner_2[j].y <= -100){
+                errors[i][j] = INFINITY;
+                continue;
+            }
+            //std::cout << "silly" << "\n";
+            error = error_calculation(image_1,corner_1[i],image_2,corner_2[j]);
+            errors[i][j] = error;
+        }
+    }
+    double lowest = 0;
+    double minimum = 0;
+    std::vector<double> lowest_nums = {};
+    while (lowest != INFINITY){
+        lowest = INFINITY;
+        //std::cout << "silly" << "\n";
+        for (long unsigned int i = 0; i < errors.size(); i++){
+            for (long unsigned int j = 0; j < errors[i].size(); j++){
+                if (errors[i][j] < lowest && errors[i][j] > minimum){
+                    lowest = errors[i][j];
                 }
-                if (corner_2[j].x > image_2.size()/2){
-                    errors[i][j] = INFINITY;
-                    continue;
-                } 
-                if (corner_1[i].y - corner_2[j].y >= 100 || (int)corner_1[i].y - (int)corner_2[j].y <= -100){
-                    errors[i][j] = INFINITY;
-                    continue;
-                }
-                //std::cout << "silly" << "\n";
-                error = error_calculation(image_1,corner_1[i],image_2,corner_2[j]);
-                errors[i][j] = error;
             }
         }
-        double lowest = INFINITY;
-        double minimum = 0;
-        std::vector<double> lowest_nums = {};
-        while (lowest != INFINITY){
-            for (long unsigned int i = 0; i < errors.size(); i++){
-                for (long unsigned int j = 0; j < errors[i].size(); j++){
-                    if (errors[i][j] < lowest && errors[i][j] > minimum){
-                        lowest = errors[i][j];
-                    }
+        if (lowest != INFINITY){
+            lowest_nums.push_back(lowest);
+            minimum = lowest;
+        }
+    }
+    std::vector<CornerPair> final_pairs = {};
+    CornerPair fin_corn = {};
+    for (long unsigned int k = 0; k < lowest_nums.size(); k++){
+        for (long unsigned int i = 0; i < errors.size(); i++){
+            for (long unsigned int j = 0; j < errors[i].size(); j++){
+                //std::cout << lowest_nums[k] << " " << errors[i][j] << "\n";
+                if (lowest_nums[k] == errors[i][j]){
+                    fin_corn.image1_corner = corner_1[i];
+                    fin_corn.image2_corner = corner_2[j];
+                    final_pairs.push_back(fin_corn);
                 }
             }
-            if (lowest != INFINITY){
-                lowest_nums.push_back(lowest);
-                minimum = lowest;
-                lowest = INFINITY;
-            }
-        }
-        std::vector<CornerPair> final_pairs = {};
-        CornerPair fin_corn = {};
-        for (long unsigned int k = 0; k < lowest_nums.size(); k++){
-            for (long unsigned int i = 0; i < errors.size(); i++){
-                for (long unsigned int j = 0; j < errors[i].size(); j++){
-                    if (lowest_nums[k] == errors[i][j]){
-                        fin_corn.image1_corner = corner_1[i];
-                        fin_corn.image2_corner = corner_2[j];
-                        final_pairs.push_back(fin_corn);
-                    }
-                }
-            }    
-        }
+        }    
+    }
+    std::cout << final_pairs.size() << " " << "we outty" << "\n";
     // TODO(student): Complete key points matching algorithm
     return final_pairs;
 }
