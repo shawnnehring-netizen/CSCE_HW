@@ -10,7 +10,6 @@ double error_calculation(const Image& image_1,
                          const Corner& point_1, 
                          const Image& image_2,
                          const Corner& point_2) {
-    std::cout << "sill" << "\n";
     std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE);
     std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE);
     long unsigned int block = ERROR_NEIGHBORHOOD_SIZE/2;
@@ -20,7 +19,6 @@ double error_calculation(const Image& image_1,
     int y_value_1=0;
     int x_value_2=0;
     int y_value_2=0;
-    std::cout << "silly" << "\n";
     for (unsigned int i = 0; i < ERROR_NEIGHBORHOOD_SIZE; i++){
         for (unsigned int j = 0; j < ERROR_NEIGHBORHOOD_SIZE; j++){
             x_value_1 = point_1.x-(ERROR_NEIGHBORHOOD_SIZE/2) + i;
@@ -42,7 +40,7 @@ double error_calculation(const Image& image_1,
         green_num = std::pow(((int)first_numbers[i].green - (int)second_numbers[i].green),2);
         blue_num = std::pow(((int)first_numbers[i].blue - (int)second_numbers[i].blue),2);
         //std::cout << red_num << " " << green_num << " " << blue_num << "\n";
-        sum += std::sqrt((red_num + green_num + blue_num));
+        sum += (red_num + green_num + blue_num);
     }
     // TODO(student): Complete error calculation function.
     return sum;
