@@ -52,6 +52,7 @@ std::vector<CornerPair> match_corners(const Image& image_1,
                                       const std::vector<Corner>& corner_2) {
     std::vector<CornerPair> final_corn = {};
     std::vector<std::vector<double>> errors(corner_1.size(), std::vector<double>(corner_2.size()));
+    
     double error = 0;
     int count = 0;
     for (long unsigned int i = 0; i < corner_1.size(); i++){
@@ -97,6 +98,8 @@ std::vector<CornerPair> match_corners(const Image& image_1,
                 count +=1;}
         }
     }
+    std::vector<std::vector<double>> errors_ex = errors;
+    while ()// here
     std::vector<CornerPair> final_pairs = {};
     std::cout << count << "\n";
     CornerPair fin_corn = {};
@@ -156,7 +159,7 @@ Image merge_images(const Image& image_1,
                 I1_pixel = image_1[i][j];
                 I1 = true;
             }
-            if (map_x < image_2.size() || map_y < image_2[0].size()){
+            if (map_x < image_2.size() && map_x >= 0 && map_y >= 0 && map_y < image_2[0].size()){
                 I2_pixel = bicubic_interpolation(image_2,map_x, map_y);
                 I2 = true;
             }
