@@ -13,7 +13,7 @@ double error_calculation(const Image& image_1,
     std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE);
     std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE);
     long unsigned int block = ERROR_NEIGHBORHOOD_SIZE/2;
-    if (point_1.x < block || (point_1.x + block) >= image_1.size() || point_2.x < block || (point_2.x + block) >= image_2.size() || point_1.y < block || (point_1.y + block) >= image_1[0].size() || point_2.x < block || (point_2.x + block) >= image_2.size()){
+    if (point_1.x < block || (point_1.x + block) >= image_1.size() || point_2.x < block || (point_2.x + block) >= image_2.size() || point_1.y < block || (point_1.y + block) >= image_1[0].size() || point_2.y < block || (point_2.y + block) >= image_2[0].size()){
         return INFINITY;}
     int x_value_1= 0;
     int y_value_1=0;
@@ -57,24 +57,22 @@ std::vector<CornerPair> match_corners(const Image& image_1,
     for (long unsigned int i = 0; i < corner_1.size(); i++){
         for (long unsigned int j = 0; j < corner_2.size(); j++){
             //std::cout << "igu" << "\n";
-            if (corner_1[i].x < image_1.size()/2){
+            if (corner_1[i].x < (image_1.size()/2)){
                 errors[i][j] = INFINITY;
                 continue;
             }
-            if (corner_2[j].x > image_2.size()/2){
+            if (corner_2[j].x > (image_2.size()/2)){
                 errors[i][j] = INFINITY;
                 continue;
             } 
-            if (corner_1[i].y - corner_2[j].y > 100 || (int)corner_1[i].y - (int)corner_2[j].y < -100){
+            if (((int)corner_1[i].y - (int)corner_2[j].y) > 100 || ((int)corner_1[i].y - (int)corner_2[j].y) < -100){
                 errors[i][j] = INFINITY;
                 continue;
             }
             //std::cout << "silly" << "\n";
-            else {
-                error = error_calculation(image_1,corner_1[i],image_2,corner_2[j]);
-                errors[i][j] = error;
-                count += 1;
-            }
+            error = error_calculation(image_1,corner_1[i],image_2,corner_2[j]);
+            errors[i][j] = error;
+            count += 1;
         }
     }
     std::cout << errors.size() << " " << errors[0].size() << " " << count << "\n";
