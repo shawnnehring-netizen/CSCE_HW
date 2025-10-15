@@ -53,6 +53,7 @@ std::vector<CornerPair> match_corners(const Image& image_1,
     std::vector<CornerPair> final_corn = {};
     std::vector<std::vector<double>> errors(corner_1.size(), std::vector<double>(corner_2.size()));
     double error = 0;
+    int count = 0;
     for (long unsigned int i = 0; i < corner_1.size(); i++){
         for (long unsigned int j = 0; j < corner_2.size(); j++){
             //std::cout << "igu" << "\n";
@@ -64,15 +65,19 @@ std::vector<CornerPair> match_corners(const Image& image_1,
                 errors[i][j] = INFINITY;
                 continue;
             } 
-            if (corner_1[i].y - corner_2[j].y >= 100 || (int)corner_1[i].y - (int)corner_2[j].y <= -100){
+            if (corner_1[i].y - corner_2[j].y > 100 || (int)corner_1[i].y - (int)corner_2[j].y < -100){
                 errors[i][j] = INFINITY;
                 continue;
             }
             //std::cout << "silly" << "\n";
-            error = error_calculation(image_1,corner_1[i],image_2,corner_2[j]);
-            errors[i][j] = error;
+            else {
+                error = error_calculation(image_1,corner_1[i],image_2,corner_2[j]);
+                errors[i][j] = error;
+                count += 1;
+            }
         }
     }
+    std::cout << errors.size() << " " << errors[0].size() << " " << count << "\n";
     double lowest = 0;
     double minimum = 0;
     std::vector<double> lowest_nums = {};
@@ -100,6 +105,7 @@ std::vector<CornerPair> match_corners(const Image& image_1,
                 if (lowest_nums[k] == errors[i][j]){
                     fin_corn.image1_corner = corner_1[i];
                     fin_corn.image2_corner = corner_2[j];
+                    fin_corn.error = errors[i][j];
                     final_pairs.push_back(fin_corn);
                 }
             }
@@ -132,9 +138,9 @@ Image merge_images(const Image& image_1,
                    const std::vector<std::vector<double>>& tran_matr) {
     int width = image_1.size() * 1.75;
     int height = image_1[0].size() * 1.5;
-    Image tran_image(width, std::vector<Pixel>(height), {});
-    for (long unsigned int i = 0; i < tran_image.size(); i++){
-        for (long unsigned int j = 0; j < tran_image[i].size(); j++){
+    Image tran_image(width, std::vector<Pixel>(height));
+    for (int i = 0; i < width; i++){
+        for (int j = 0; j < height; j++){
             Pixel I1_pixel = {};
             Pixel I2_pixel = {};
             double map_x = 0;
@@ -144,11 +150,11 @@ Image merge_images(const Image& image_1,
             bool I2 = false;
 
             map_coordinates(tran_matr, i, j, map_x, map_y);
-            if (map_x < image_1.size() || map_y < image_1[0].size()){
+            if (map_x < image_1.size() && map_y < image_1[0].size()){
                 I1_pixel = bicubic_interpolation(image_1,map_x, map_y);
                 I1 = true;
             }
-            if (map_x < image_2.size() || map_y < image_2[0].size()){
+            if (map_x < image_2.size() && map_y < image_2[0].size()){
                 I2_pixel = bicubic_interpolation(image_2,map_x, map_y);
                 I2 = true;
             }
