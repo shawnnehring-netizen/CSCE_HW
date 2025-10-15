@@ -10,6 +10,7 @@ double error_calculation(const Image& image_1,
                          const Corner& point_1, 
                          const Image& image_2,
                          const Corner& point_2) {
+    std::cout << "sill" << "\n";
     std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE);
     std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE);
     long unsigned int block = ERROR_NEIGHBORHOOD_SIZE/2;
@@ -19,13 +20,15 @@ double error_calculation(const Image& image_1,
     int y_value_1=0;
     int x_value_2=0;
     int y_value_2=0;
-
+    std::cout << "silly" << "\n";
     for (unsigned int i = 0; i < ERROR_NEIGHBORHOOD_SIZE; i++){
         for (unsigned int j = 0; j < ERROR_NEIGHBORHOOD_SIZE; j++){
             x_value_1 = point_1.x-(ERROR_NEIGHBORHOOD_SIZE/2) + i;
             y_value_1 = point_1.y-(ERROR_NEIGHBORHOOD_SIZE/2) + j;
             x_value_2 = point_2.x-(ERROR_NEIGHBORHOOD_SIZE/2) + i;
             y_value_2 =point_2.y-(ERROR_NEIGHBORHOOD_SIZE/2) + j;
+            //std::cout << x_value_1 << " " << y_value_1 << " " << x_value_2 << " " << y_value_2 << "\n";
+            //std::cout << (int)image_1[x_value_1][y_value_1].red << " " << (int)image_2[x_value_2][y_value_2].red << " " << (int)image_1[x_value_1][y_value_1].red - (int)image_2[x_value_2][y_value_2].red <<"\n";
             first_numbers.push_back(image_1[x_value_1][y_value_1]);
             second_numbers.push_back(image_2[x_value_2][y_value_2]);
         }
@@ -35,9 +38,10 @@ double error_calculation(const Image& image_1,
     int blue_num = 0;
     double sum = 0;
     for (long unsigned int i = 0; i < first_numbers.size(); i++){
-        red_num = std::pow((first_numbers[i].red - second_numbers[i].red),2);
-        green_num = std::pow((first_numbers[i].green - second_numbers[i].green),2);
-        blue_num = std::pow((first_numbers[i].blue - second_numbers[i].blue),2);
+        red_num = std::pow(((int)first_numbers[i].red - (int)second_numbers[i].red),2);
+        green_num = std::pow(((int)first_numbers[i].green - (int)second_numbers[i].green),2);
+        blue_num = std::pow(((int)first_numbers[i].blue - (int)second_numbers[i].blue),2);
+        //std::cout << red_num << " " << green_num << " " << blue_num << "\n";
         sum += std::sqrt((red_num + green_num + blue_num));
     }
     // TODO(student): Complete error calculation function.
@@ -48,11 +52,13 @@ std::vector<CornerPair> match_corners(const Image& image_1,
                                       const std::vector<Corner>& corner_1,
                                       const Image& image_2,
                                       const std::vector<Corner>& corner_2) {
+        std::cout << "blah" << "\n";
         std::vector<CornerPair> final_corn = {};
         std::vector<std::vector<double>> errors(corner_1.size(), std::vector<double>(corner_2.size()));
         double error = 0;
         for (long unsigned int i = 0; i < corner_1.size(); i++){
             for (long unsigned int j = 0; j < corner_2.size(); j++){
+                //std::cout << "igu" << "\n";
                 if (corner_1[i].x < image_1.size()/2){
                     errors[i][j] = INFINITY;
                     continue;
@@ -60,11 +66,12 @@ std::vector<CornerPair> match_corners(const Image& image_1,
                 if (corner_2[j].x > image_2.size()/2){
                     errors[i][j] = INFINITY;
                     continue;
-                }
-                if (corner_1[i].y - corner_2[j].y >= 100 || corner_1[i].y - corner_2[j].y <= 100){
+                } 
+                if (corner_1[i].y - corner_2[j].y >= 100 || (int)corner_1[i].y - (int)corner_2[j].y <= -100){
                     errors[i][j] = INFINITY;
                     continue;
                 }
+                //std::cout << "silly" << "\n";
                 error = error_calculation(image_1,corner_1[i],image_2,corner_2[j]);
                 errors[i][j] = error;
             }
