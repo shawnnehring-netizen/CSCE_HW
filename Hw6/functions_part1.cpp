@@ -5,6 +5,14 @@
 //                load_image
 //                output_image
 //                bicubic_interpolation
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <cmath>
+#include <string>
+#include "functions.h"
+#include <vector>
+
 Image load_image(const std::string& file) {
     // TODO(student): implement image loading
     if (file == ""){
