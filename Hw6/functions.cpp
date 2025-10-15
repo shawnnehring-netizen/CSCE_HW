@@ -12,7 +12,7 @@ double error_calculation(const Image& image_1,
                          const Corner& point_2) {
     std::vector<Pixel> first_numbers(ERROR_NEIGHBORHOOD_SIZE);
     std::vector<Pixel> second_numbers(ERROR_NEIGHBORHOOD_SIZE);
-    int block = ERROR_NEIGHBORHOOD_SIZE/2;
+    long unsigned int block = ERROR_NEIGHBORHOOD_SIZE/2;
     if (point_1.x < block || (image_1.size()-point_1.x) < block || point_2.x < block || (image_2.size()-point_2.x) < block || point_1.y < block || (image_1[0].size()-point_1.y) < block || point_2.x < block || (image_2.size()-point_2.x) < block){
         return INFINITY;}
     int x_value_1= 0;
@@ -22,10 +22,10 @@ double error_calculation(const Image& image_1,
 
     for (unsigned int i = 0; i < ERROR_NEIGHBORHOOD_SIZE; i++){
         for (unsigned int j = 0; j < ERROR_NEIGHBORHOOD_SIZE; j++){
-            x_value_1 = point_1.x-((ERROR_NEIGHBORHOOD_SIZE/2) + i);
-            y_value_1 = point_1.y-((ERROR_NEIGHBORHOOD_SIZE/2) + j);
-            x_value_2 = point_2.x-((ERROR_NEIGHBORHOOD_SIZE/2) + i);
-            y_value_2 =point_2.y-((ERROR_NEIGHBORHOOD_SIZE/2) + j);
+            x_value_1 = point_1.x-(ERROR_NEIGHBORHOOD_SIZE/2) + i;
+            y_value_1 = point_1.y-(ERROR_NEIGHBORHOOD_SIZE/2) + j;
+            x_value_2 = point_2.x-(ERROR_NEIGHBORHOOD_SIZE/2) + i;
+            y_value_2 =point_2.y-(ERROR_NEIGHBORHOOD_SIZE/2) + j;
             first_numbers.push_back(image_1[x_value_1][y_value_1]);
             second_numbers.push_back(image_2[x_value_2][y_value_2]);
         }
@@ -35,10 +35,10 @@ double error_calculation(const Image& image_1,
     int blue_num = 0;
     double sum = 0;
     for (long unsigned int i = 0; i < first_numbers.size(); i++){
-        red_num = std::pow((first_numbers[i].red-second_numbers[i].red),2);
-        green_num = std::pow((first_numbers[i].green-second_numbers[i].green),2);
-        blue_num = std::pow((first_numbers[i].blue-second_numbers[i].blue),2);
-        sum += std::sqrt((red_num+green_num+blue_num));
+        red_num = std::pow((first_numbers[i].red - second_numbers[i].red),2);
+        green_num = std::pow((first_numbers[i].green - second_numbers[i].green),2);
+        blue_num = std::pow((first_numbers[i].blue - second_numbers[i].blue),2);
+        sum += std::sqrt((red_num + green_num + blue_num));
     }
     // TODO(student): Complete error calculation function.
     return sum;
