@@ -58,15 +58,15 @@ std::vector<CornerPair> match_corners(const Image& image_1,
     for (long unsigned int i = 0; i < corner_1.size(); i++){
         for (long unsigned int j = 0; j < corner_2.size(); j++){
             //std::cout << "igu" << "\n";
-            if (corner_1[i].x <= (image_1.size()/2)){
+            if (corner_1[i].x < (image_1.size()/2)){
                 errors[i][j] = INFINITY;
                 continue;
             }
-            if (corner_2[j].x >= (image_2.size()/2)){
+            if (corner_2[j].x > (image_2.size()/2)){
                 errors[i][j] = INFINITY;
                 continue;
             } 
-            if (((int)corner_1[i].y - (int)corner_2[j].y) >= 100 || ((int)corner_1[i].y - (int)corner_2[j].y) <= -100){
+            if (((int)corner_1[i].y - (int)corner_2[j].y) > 100 || ((int)corner_1[i].y - (int)corner_2[j].y) < -100){
                 errors[i][j] = INFINITY;
                 continue;
             }
