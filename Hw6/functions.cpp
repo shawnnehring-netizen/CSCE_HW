@@ -78,28 +78,36 @@ std::vector<CornerPair> match_corners(const Image& image_1,
             }
         }   
     }
-    std::cout << errors.size() << " " << errors[0].size() << " " << count << "\n";
+    //std::cout << errors.size() << " " << errors[0].size() << " " << count << "\n";
     double lowest = 0;
-    double minimum = 0;
     std::vector<double> lowest_nums = {};
     count = 0;
+    std::vector<std::vector<double>> errors_ex = errors;
+    int x = 0;
+    int y = 0;
     while (lowest != INFINITY){
-        //std::cout << "silly" << "\n";
         lowest = INFINITY;
-        for (long unsigned int i = 0; i < errors.size(); i++){
-            for (long unsigned int j = 0; j < errors[i].size(); j++){
-                if (errors[i][j] < lowest){
-                    lowest = errors[i][j];
+        for (long unsigned int i = 0; i < errors_ex.size(); i++){
+            for (long unsigned int j = 0; j < errors_ex[i].size(); j++){
+                if (errors_ex[i][j] < lowest){
+                    lowest = errors_ex[i][j];
+                    x = i;
+                    y = j;
                 }
             }
-            if (lowest != INFINITY){
-                lowest_nums.push_back(lowest);
-                minimum = lowest;
-                count +=1;}
+        }
+        if (lowest != INFINITY){
+            //std::cout << "bang" << "\n";
+            lowest_nums.push_back(lowest);
+            count +=1;
+            for (long unsigned int i = 0; i < errors_ex.size(); i++){
+                errors_ex[i][y] = INFINITY;
+            }
+            for (long unsigned int j = 0; j < errors_ex[x].size(); j++){
+                errors_ex[x][j] = INFINITY;
+            }
         }
     }
-    std::vector<std::vector<double>> errors_ex = errors;
-    while ()// here
     std::vector<CornerPair> final_pairs = {};
     std::cout << count << "\n";
     CornerPair fin_corn = {};
@@ -116,7 +124,7 @@ std::vector<CornerPair> match_corners(const Image& image_1,
             }
         }    
     }
-    std::cout << final_pairs.size() << " " << "we outty" << "\n";
+    //std::cout << final_pairs.size() << " " << "we outty" << "\n";
     // TODO(student): Complete key points matching algorithm
     return final_pairs;
 }
