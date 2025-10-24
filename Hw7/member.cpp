@@ -1,11 +1,11 @@
 #include "member.h"
 
-Member::Member(std::string,  // firstName
-               std::string,  // last_name
-               int           // id
-            ) : name{}, id{} {
+Member::Member(std::string first,  // firstName
+               std::string last,  // last_name
+               int id          // id
+            ) : name{first,last}, id{id} {
     // TODO(student)
-    std::string full_name = name.first_name + name.last_name;
+    std::string full_name = first + last;
     if (full_name.size() == 0){
         throw std::invalid_argument("Invalid name");
     }
@@ -19,9 +19,9 @@ Member::Member(std::string,  // firstName
     }
 }
 
-Member::Member(MemberName,  // name
-               int          // id
-               ) : name{}, id{} {
+Member::Member(MemberName name,  // name
+               int id     // id
+               ) : name{name}, id{id} {
     // TODO(student)
     std::string full_name = name.first_name + name.last_name;
     if (full_name.size() == 0){

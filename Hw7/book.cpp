@@ -2,18 +2,18 @@
 //cd Hw7
 //ls book.cpp book.h library.cpp library.h lms_utilities.cpp lms_utilities.h main.cpp member.cpp member.h
 //g++ -std=c++17 -Wall -Wextra -Weffc++ -pedantic-errors -g *.cpp
-Book::Book(std::string,  // title
-           std::string,  // author_first_name
-           std::string,  // author_last_name
-           std::string,  // isbn
-           bool          // available
-         ) : title{}, author{}, isbn{}, available{} {
+Book::Book(std::string title,  // title
+           std::string first,  // author_first_name
+           std::string last,  // author_last_name
+           std::string isbn,  // isbn
+           bool available         // available
+         ) : title{title}, author{first,last}, isbn{isbn}, available{available} {
    std::string author_name = author.first_name + author.last_name;
    if (title.size() == 0){
       throw std::invalid_argument("Invalid title");
    }
    for (long unsigned int i = 0; i < title.size(); i++){
-      if (!(std::isalpha(title[i])) || (title[i] = '-') || (title[i] = ' ') || (title[i] = ':')){
+      if (!((std::isalpha(title[i])) || (title[i] = '-') || (title[i] = ' ') || (title[i] = ':'))){
          throw std::invalid_argument("Invalid title");
       }
    }
@@ -32,18 +32,18 @@ Book::Book(std::string,  // title
    // TODO(student)
 }
 
-Book::Book(std::string,  // title
-           AuthorName,   // author
-           std::string,  // isbn
-           bool          // available
-         ) : title{}, author{}, isbn{}, available{} {
+Book::Book(std::string title,  // title
+           AuthorName author,   // author
+           std::string isbn,  // isbn
+           bool available         // available
+         ) : title{title}, author{author}, isbn{isbn}, available{available} {
    // TODO(student)
    std::string author_name = author.first_name + author.last_name;
    if (title.size() == 0){
       throw std::invalid_argument("Invalid title");
    }
    for (long unsigned int i = 0; i < title.size(); i++){
-      if (!(std::isalpha(author_name[i]) && !(author_name[i] = '-') && !(author_name[i] = ' ') && !(author_name[i] = ':'))){
+      if (!((std::isalpha(title[i])) || (title[i] = '-') || (title[i] = ' ') || (title[i] = ':'))){
          throw std::invalid_argument("Invalid title");
       }
    }
@@ -51,12 +51,12 @@ Book::Book(std::string,  // title
       throw std::invalid_argument("Invalid author");
    }
    for (long unsigned int i = 0; i < author_name.size(); i++){
-      if (!(std::isalpha(title[i]) && !(title[i] == ' '))){ //possible hidden case
+      if (!(std::isalpha(author_name[i]))){
          throw std::invalid_argument("Invalid author");
       }
    }
    if (!(isbn.size() == 10 || isbn.size() == 13) && !(typeid(isbn).name() == typeid("").name())){
-      throw std::invalid_argument("Invaldi ISBN");
+      throw std::invalid_argument("Invalid ISBN");
    }
 }
 
