@@ -25,7 +25,7 @@ Book::Book(std::string title,  // title
          throw std::invalid_argument("Invalid author");
       }
    }
-   if (!(isbn.size() == 10 || isbn.size() == 13) || !(typeid(isbn).name() == typeid("").name())){
+   if (!(isbn.size() == 10 || isbn.size() == 13) || !(typeid(isbn[0]).name() == typeid(char).name())){
       throw std::invalid_argument("Invalid ISBN");
    }
 
