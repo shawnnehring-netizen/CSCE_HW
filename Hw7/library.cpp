@@ -73,7 +73,9 @@ void Library::display_available_books(std::ostream& os) {
    // TODO(student)
    // use the ostream parameter, NOT std::cout
    for (long unsigned int i = 0 ; i < books.size();i++){
-      os << books[i] << '\n';
+      if (books[i].is_available()){
+         os << books[i] << '\n';
+      }
    }
 
 }
@@ -90,17 +92,21 @@ bool Library::is_book_available(const std::string& isbn) {
    // TODO(student)
    bool isbn_check = false;
    bool return_check = false;
+   bool valid_isbn = false;
    for (long unsigned int i = 0 ; i < books.size();i++){
       if (isbn == books[i].get_isbn()){
          isbn_check = true;
          Book this_book = books[i];
-         if (!(books[i].is_available())){
+         if ((books[i].is_available())){
             return_check = true;
+         }
+         if (!(isbn.size() == 10 || isbn.size() == 13) || !(typeid(isbn).name() == typeid("").name())){
+            valid_isbn = true;
          }
          break;
       }
    }
-   if (!(isbn_check && return_check)){
+   if (!(isbn_check && return_check && valid_isbn)){
       return false;
    }
    return true;

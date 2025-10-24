@@ -18,12 +18,9 @@ int read_list_of_books(Library& lib, const std::string& file) {
    if (!(word_file.is_open())){
       throw std::runtime_error("Cannot open "+file);
    }
-   while (word_file >> title >> first_name >> last_name >> isbn){
-      AuthorName author = {};
-      author.first_name = first_name;
-      author.last_name = last_name;
+   while (word_file >> isbn >> last_name >> first_name >> title){
       try{
-         Book new_book = Book(title,author,isbn,true);
+         Book new_book = Book(title,first_name,last_name,isbn);
          lib.add_book(new_book);
          count +=1;
       }
