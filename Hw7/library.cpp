@@ -73,7 +73,7 @@ void Library::display_available_books(std::ostream& os) {
    // TODO(student)
    // use the ostream parameter, NOT std::cout
    for (long unsigned int i = 0 ; i < books.size();i++){
-      os << books[i] << "\n";
+      os << books[i] << '\n';
    }
 
 }
@@ -82,7 +82,7 @@ void Library::display_library_members(std::ostream& os) {
    // TODO(student)
    // use the ostream parameter, NOT std::cout
    for (long unsigned int i = 0 ; i < members.size();i++){
-      os << members[i] << "\n";
+      os << members[i] << '\n';
    }
 }
 

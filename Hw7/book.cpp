@@ -9,24 +9,24 @@ Book::Book(std::string,  // title
            bool          // available
          ) : title{}, author{}, isbn{}, available{} {
    std::string author_name = author.first_name + author.last_name;
-   if (author_name.size() == 0){
-      throw std::invalid_argument("Invalid author");
-   }
-   for (long unsigned int i = 0; i < author_name.size(); i++){
-      if (!(std::isalpha(author_name[i]) && !(author_name[i] = '-') && !(author_name[i] = ' ') && !(author_name[i] = ':'))){
-         throw std::invalid_argument("Invalid author");
-      }
-   }
    if (title.size() == 0){
       throw std::invalid_argument("Invalid title");
    }
    for (long unsigned int i = 0; i < title.size(); i++){
-      if (!(std::isalpha(title[i]))){
+      if (!((std::isalpha(title[i]) || (title[i] = '-') || (title[i] = ' ') || (title[i] = ':'))){
          throw std::invalid_argument("Invalid title");
       }
    }
+   if (author_name.size() == 0){
+      throw std::invalid_argument("Invalid author");
+   }
+   for (long unsigned int i = 0; i < author_name.size(); i++){
+      if (!(std::isalpha(author_name[i]))){
+         throw std::invalid_argument("Invalid author");
+      }
+   }
    if (!(isbn.size() == 10 || isbn.size() == 13) && !(typeid(isbn).name() == typeid("").name())){
-      throw std::invalid_argument("Invaldi ISBN");
+      throw std::invalid_argument("Invalid ISBN");
    }
 
    // TODO(student)
@@ -105,6 +105,5 @@ std::ostream& operator<<(std::ostream& os, const Book& blah) {
    AuthorName author = blah.get_author();
    std::string author_name = author.first_name + ' ' + author.last_name;
    os << "title: \"" << title << "\" by " << author_name << ", isbn: " << isbn;
-
    return os;
 }
