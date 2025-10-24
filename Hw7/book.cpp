@@ -13,7 +13,7 @@ Book::Book(std::string title,  // title
       throw std::invalid_argument("Invalid title");
    }
    for (long unsigned int i = 0; i < title.size(); i++){
-      if (!((std::isalpha(title[i])) || (title[i] = '-') || (title[i] = ' ') || (title[i] = ':'))){
+      if (!((std::isalpha(title[i])) || (title[i] == '-') || (title[i] == ' ') || (title[i] == ':'))){
          throw std::invalid_argument("Invalid title");
       }
    }
@@ -43,7 +43,7 @@ Book::Book(std::string title,  // title
       throw std::invalid_argument("Invalid title");
    }
    for (long unsigned int i = 0; i < title.size(); i++){
-      if (!((std::isalpha(title[i])) || (title[i] = '-') || (title[i] = ' ') || (title[i] = ':'))){
+      if (!((std::isalpha(title[i])) || (title[i] == '-') || (title[i] == ' ') || (title[i] == ':'))){
          throw std::invalid_argument("Invalid title");
       }
    }
@@ -55,7 +55,7 @@ Book::Book(std::string title,  // title
          throw std::invalid_argument("Invalid author");
       }
    }
-   if (!(isbn.size() == 10 || isbn.size() == 13) || !(typeid(isbn).name() == typeid("").name())){
+   if (!(isbn.size() == 10 || isbn.size() == 13) || !(typeid(isbn[0]).name() == typeid(char).name())){
       throw std::invalid_argument("Invalid ISBN");
    }
 }

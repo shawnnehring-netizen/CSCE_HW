@@ -35,7 +35,7 @@ int read_list_of_books(Library& lib, const std::string& file) {
          isbn = line;
          step = 3;
       }
-      else if (step == 3){
+      if (step == 3){
          step = 0;
          try{
             Book new_book = Book(title,first_name,last_name,isbn);
