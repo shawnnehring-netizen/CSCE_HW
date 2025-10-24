@@ -10,15 +10,10 @@ Book::Book(std::string,  // title
          ) : title{}, author{}, isbn{}, available{} {
    std::string author_name = author.first_name + author.last_name;
    if (author_name.size() == 0){
-      throw std::invalid_argument("Invalid title");
+      throw std::invalid_argument("Invalid author");
    }
    for (long unsigned int i = 0; i < author_name.size(); i++){
       if (!(std::isalpha(author_name[i]) && !(author_name[i] = '-') && !(author_name[i] = ' ') && !(author_name[i] = ':'))){
-         throw std::invalid_argument("Invalid author");
-      }
-   }
-   for (long unsigned int i = 0; i < author.last_name.size(); i++){
-      if (!(std::isalpha(author.last_name[i]) && !(author.last_name[i] = '-') && !(author.last_name[i] = ' ') && !(author.last_name[i] = ':'))){
          throw std::invalid_argument("Invalid author");
       }
    }
@@ -44,25 +39,20 @@ Book::Book(std::string,  // title
          ) : title{}, author{}, isbn{}, available{} {
    // TODO(student)
    std::string author_name = author.first_name + author.last_name;
-   if (author_name.size() == 0){
-      throw std::invalid_argument("Invalid title");
-   }
-   for (long unsigned int i = 0; i < author_name.size(); i++){
-      if (!(std::isalpha(author_name[i]) && !(author_name[i] = '-') && !(author_name[i] = ' ') && !(author_name[i] = ':'))){
-         throw std::invalid_argument("Invalid author");
-      }
-   }
-   for (long unsigned int i = 0; i < author.last_name.size(); i++){
-      if (!(std::isalpha(author.last_name[i]) && !(author.last_name[i] = '-') && !(author.last_name[i] = ' ') && !(author.last_name[i] = ':'))){
-         throw std::invalid_argument("Invalid author");
-      }
-   }
    if (title.size() == 0){
       throw std::invalid_argument("Invalid title");
    }
    for (long unsigned int i = 0; i < title.size(); i++){
-      if (!(std::isalpha(title[i]))){
+      if (!(std::isalpha(author_name[i]) && !(author_name[i] = '-') && !(author_name[i] = ' ') && !(author_name[i] = ':'))){
          throw std::invalid_argument("Invalid title");
+      }
+   }
+   if (author_name.size() == 0){
+      throw std::invalid_argument("Invalid author");
+   }
+   for (long unsigned int i = 0; i < author_name.size(); i++){
+      if (!(std::isalpha(title[i]) && !(title[i] == ' '))){ //possible hidden case
+         throw std::invalid_argument("Invalid author");
       }
    }
    if (!(isbn.size() == 10 || isbn.size() == 13) && !(typeid(isbn).name() == typeid("").name())){
@@ -114,7 +104,7 @@ std::ostream& operator<<(std::ostream& os, const Book& blah) {
    std::string isbn = blah.get_isbn();
    AuthorName author = blah.get_author();
    std::string author_name = author.first_name + ' ' + author.last_name;
-   std::cout << "title: \"" << title << "\" by " << author_name << ", isbn: " << isbn;
+   os << "title: \"" << title << "\" by " << author_name << ", isbn: " << isbn;
 
    return os;
 }

@@ -5,7 +5,10 @@
 #include <vector>
 #include "library.h"
 #include "lms_utilities.h"
-
+//library_books_0.txt
+//library_members_0.txt
+//borrowed_books_0.txt
+//returned_books_0.txt
 int process_library(const std::vector<std::string>& filenames) {
     const std::string& library_books = filenames[0];
     const std::string& library_members = filenames[1];

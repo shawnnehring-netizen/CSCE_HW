@@ -52,6 +52,6 @@ std::ostream& operator<<(std::ostream& os, const Member& mem) {
    MemberName name = mem.get_name();
    int id = mem.get_id();
    std::string full_name = name.first_name + ' ' + name.last_name;
-   std::cout << "Member: " << full_name << ", id: " << id;
+   os << "Member: " << full_name << ", id: " << id;
    return os;
 }
