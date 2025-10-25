@@ -28,7 +28,7 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
       }
    }
    if (!isbn_check){
-      msg = "Book ISBN: " + isbn + " not available\n";
+      msg = "Book ISBN: " + isbn + " not available";
       return false;
    }
    for (long unsigned int i = 0 ; i < members.size();i++){
@@ -38,7 +38,7 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
       }
    }
    if (!id_check){
-      msg = "Member " + std::to_string(id) + " not found\n";
+      msg = "Member " + std::to_string(id) + " not found";
       return false;
    }
    msg = "Book \"" + this_book.get_title() + "\" returned";
@@ -62,14 +62,14 @@ bool Library::return_book(const std::string& isbn, std::string& msg) {
       }
    }
    if (!(isbn_check)){
-      msg = "Book ISBN: " + isbn + " not found\n";
+      msg = "Book ISBN: " + isbn + " not found";
       return false;
    }
    if (!(return_check)){
-      msg = "Book ISBN: " + isbn + " still available (cannot be returned)\n";
+      msg = "Book ISBN: " + isbn + " still available (cannot be returned)";
       return false;
    }
-   msg = "Book \"" + this_book.get_title() + "\" returned\n";
+   msg = "Book \"" + this_book.get_title() + "\" returned";
    this_book.return_book();
    return true;
 }
