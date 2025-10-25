@@ -77,16 +77,26 @@ int read_list_of_members(Library& lib, const std::string& file) {
 int read_list_of_borrowed_books(Library& lib, const std::string& file) {
   // TODO(student)
    std::string isbn = "";
+   std::string line = "";
    int id = 0;
    int count = 0;
+   int step = 0;
    std::ifstream word_file(file);
    std::string msg = "";
    if (!(word_file.is_open())){
       throw std::runtime_error("Cannot open "+file);
    }
-   while (word_file >> id >> isbn){
-      if (lib.borrow_book(isbn,id,msg)){
-         count+=1;
+   while (getline(word_file,line)){
+      if (step == 0){
+         isbn = line;
+         step = 1;
+      }
+      else if (step == 1){
+         id = std::stoi(line);
+         step = 0;
+         if (lib.borrow_book(isbn,id,msg)){
+            count+=1;
+         }
       }
    }
    return count;
