@@ -59,7 +59,7 @@ bool Library::return_book(const std::string& isbn, std::string& msg) {
       if (isbn == books[i].get_isbn()){
          isbn_check = true;
          this_book = books[i];
-         if ((books[i].is_available())){
+         if (!(books[i].is_available())){
             return_check = true;
          }
          break;
