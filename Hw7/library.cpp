@@ -17,13 +17,13 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
    // TODO(student)
    bool isbn_check = false;
    bool id_check = false;
-   Book this_book = books[0];
+   int this_book = 0;
    Member this_mem = members[0];
    for (long unsigned int i = 0 ; i < books.size();i++){
       if (isbn == books[i].get_isbn()){
          if (books[i].is_available()){
             isbn_check = true;
-            this_book = books[i];
+            this_book = i;
          }
          break;
       }
@@ -46,7 +46,7 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
    std::ostringstream line;
    line << this_mem << " borrowed " << this_book; 
    msg = line.str();
-   this_book.borrow_book();
+   books[this_book].borrow_book();
    return true;
 }
 
@@ -54,11 +54,11 @@ bool Library::return_book(const std::string& isbn, std::string& msg) {
    // TODO(student)
    bool isbn_check = false;
    bool return_check = false;
-   Book this_book = books[0];
+   int this_book = 0;
    for (long unsigned int i = 0 ; i < books.size();i++){
       if (isbn == books[i].get_isbn()){
          isbn_check = true;
-         this_book = books[i];
+         this_book = i;
          if (!(books[i].is_available())){
             return_check = true;
          }
@@ -73,8 +73,8 @@ bool Library::return_book(const std::string& isbn, std::string& msg) {
       msg = "Book ISBN: " + isbn + " still available (cannot be returned)";
       return false;
    }
-   msg = "Book \"" + this_book.get_title() + "\" returned";
-   this_book.return_book();
+   msg = "Book \"" + books[this_book].get_title() + "\" returned";
+   books[this_book].return_book();
    return true;
 }
 
