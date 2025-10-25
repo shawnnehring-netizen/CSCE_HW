@@ -29,7 +29,7 @@ Book::Book(std::string title,  // title
       throw std::invalid_argument("Invalid ISBN");
    }
    for (long unsigned int i = 0; i < isbn.size(); i++){
-      if (!(typeid(isbn[i]).name() == typeid(char).name()) || !(std::isdigit(isbn[i]))){
+      if (!(std::isdigit(isbn[i]))){
          throw std::invalid_argument("Invalid ISBN");
       }
    }
@@ -64,7 +64,7 @@ Book::Book(std::string title,  // title
       throw std::invalid_argument("Invalid ISBN");
    }
    for (long unsigned int i = 0; i < isbn.size(); i++){
-      if (!(typeid(isbn[i]).name() == typeid(char).name()) || !(std::isdigit(isbn[i]))){
+      if (!(std::isdigit(isbn[i]))){
          throw std::invalid_argument("Invalid ISBN");
       }
    }

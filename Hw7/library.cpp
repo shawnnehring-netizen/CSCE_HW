@@ -24,6 +24,7 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
          if (books[i].is_available()){
             isbn_check = true;
             this_book = i;
+            break;
          }
       }
    }
