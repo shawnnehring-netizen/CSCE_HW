@@ -18,6 +18,7 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
    bool isbn_check = false;
    bool id_check = false;
    Book this_book = books[0];
+   Member this_mem = members[0];
    for (long unsigned int i = 0 ; i < books.size();i++){
       if (isbn == books[i].get_isbn()){
          if (books[i].is_available()){
@@ -34,6 +35,7 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
    for (long unsigned int i = 0 ; i < members.size();i++){
       if (id == members[i].get_id()){
          id_check = true;
+         this_mem = members[i];
          break;
       }
    }
@@ -41,7 +43,9 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
       msg = "Member " + std::to_string(id) + " not found";
       return false;
    }
-   msg = "Book \"" + this_book.get_title() + "\" returned";
+   std::ostringstream line;
+   line << this_mem << " borrowed " << this_book; 
+   msg = line.str();
    this_book.borrow_book();
    return true;
 }
@@ -55,7 +59,7 @@ bool Library::return_book(const std::string& isbn, std::string& msg) {
       if (isbn == books[i].get_isbn()){
          isbn_check = true;
          this_book = books[i];
-         if (!(books[i].is_available())){
+         if ((books[i].is_available())){
             return_check = true;
          }
          break;

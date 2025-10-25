@@ -25,8 +25,11 @@ Book::Book(std::string title,  // title
          throw std::invalid_argument("Invalid author");
       }
    }
+   if (!(isbn.size() == 10 || isbn.size() == 13)){
+      throw std::invalid_argument("Invalid ISBN");
+   }
    for (long unsigned int i = 0; i < isbn.size(); i++){
-      if (!(isbn.size() == 10 || isbn.size() == 13) || !(typeid(isbn[i]).name() == typeid(char).name()) || !(std::isdigit(isbn[i]))){
+      if (!(typeid(isbn[i]).name() == typeid(char).name()) || !(std::isdigit(isbn[i]))){
          throw std::invalid_argument("Invalid ISBN");
       }
    }
@@ -57,8 +60,11 @@ Book::Book(std::string title,  // title
          throw std::invalid_argument("Invalid author");
       }
    }
+   if (!(isbn.size() == 10 || isbn.size() == 13)){
+      throw std::invalid_argument("Invalid ISBN");
+   }
    for (long unsigned int i = 0; i < isbn.size(); i++){
-      if (!(isbn.size() == 10 || isbn.size() == 13) || !(typeid(isbn[i]).name() == typeid(char).name()) || !(std::isdigit(isbn[i]))){
+      if (!(typeid(isbn[i]).name() == typeid(char).name()) || !(std::isdigit(isbn[i]))){
          throw std::invalid_argument("Invalid ISBN");
       }
    }

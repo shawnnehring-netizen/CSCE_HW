@@ -2,3 +2,6 @@ library_books_0.txt
 library_members_0.txt
 borrowed_books_0.txt
 returned_books_0.txt
+
+"Book \"Alices Adventures in Wonderland\" returned" 
+"Member: Martin Fowler, id: 69420 borrowed title: \"Alices Adventures in Wonderland\" by Lewis Carroll, isbn: 9781503222687"
