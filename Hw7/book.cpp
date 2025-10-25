@@ -13,7 +13,7 @@ Book::Book(std::string title,  // title
       throw std::invalid_argument("Invalid title");
    }
    for (long unsigned int i = 0; i < title.size(); i++){
-      if (!((std::isalpha(title[i])) || (title[i] == '-') || (title[i] == ' ') || (title[i] == ':'))){
+      if (!((std::isalpha(title[i])) || (title[i] == '-') || (std::isspace(title[i])) || (title[i] == ':'))){
          throw std::invalid_argument("Invalid title");
       }
    }
@@ -43,7 +43,7 @@ Book::Book(std::string title,  // title
       throw std::invalid_argument("Invalid title");
    }
    for (long unsigned int i = 0; i < title.size(); i++){
-      if (!((std::isalpha(title[i])) || (title[i] == '-') || (title[i] == ' ') || (title[i] == ':'))){
+      if (!((std::isalpha(title[i])) || (title[i] == '-') || (std::isspace(title[i])) || (title[i] == ':'))){
          throw std::invalid_argument("Invalid title");
       }
    }

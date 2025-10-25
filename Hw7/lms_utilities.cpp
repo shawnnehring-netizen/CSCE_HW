@@ -87,17 +87,9 @@ int read_list_of_borrowed_books(Library& lib, const std::string& file) {
    if (!(word_file.is_open())){
       throw std::runtime_error("Cannot open "+file);
    }
-   while (word_file >> isbn >> id){
-   //   if (){
-   //      msg = "Book ISBN: " + isbn + " not available";
-   //   }
-   //   else if (){
-   //      msg = "Member " + id + " not found";
-   //   }
-   //   else{
-   //      msg = member + " borrowed " + book;
-   //   }
+   while (word_file >> id >> isbn){
       check = lib.borrow_book(isbn,id,msg);
+      std::cout << msg;
       if (check){
          count+=1;
       }
@@ -109,8 +101,6 @@ int read_list_of_returned_books(Library& lib, const std::string& file) {
    // TODO(student)
    std::string isbn = "";
    int count = 0;
-   //bool isbn_check = false;
-   //bool return_check = false;
    bool check = false;
    std::ifstream word_file(file);
    std::string msg = "";
@@ -118,16 +108,8 @@ int read_list_of_returned_books(Library& lib, const std::string& file) {
       throw std::runtime_error("Cannot open "+file);
    }
    while (word_file >> isbn){
-   //   if (){
-   //      msg = "Book ISBN: " + isbn + " not available";
-   //   }
-   //   else if (){
-   //      msg = "Member " + id + " not found";
-   //   }
-   //   else{
-   //      msg = member + " borrowed " + book;
-   //   }
       check = lib.return_book(isbn,msg);
+      std::cout << msg;
       if (check){
          count+=1;
       }
