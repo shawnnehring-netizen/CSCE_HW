@@ -89,7 +89,6 @@ int read_list_of_borrowed_books(Library& lib, const std::string& file) {
    }
    while (word_file >> id >> isbn){
       check = lib.borrow_book(isbn,id,msg);
-      std::cout << msg;
       if (check){
          count+=1;
       }
@@ -109,7 +108,6 @@ int read_list_of_returned_books(Library& lib, const std::string& file) {
    }
    while (word_file >> isbn){
       check = lib.return_book(isbn,msg);
-      std::cout << msg;
       if (check){
          count+=1;
       }

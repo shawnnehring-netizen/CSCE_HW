@@ -25,7 +25,6 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
             isbn_check = true;
             this_book = i;
          }
-         break;
       }
    }
    if (!isbn_check){
@@ -44,7 +43,7 @@ bool Library::borrow_book(const std::string& isbn, int id, std::string& msg) {
       return false;
    }
    std::ostringstream line;
-   line << this_mem << " borrowed " << this_book; 
+   line << this_mem << " borrowed " << books[this_book]; 
    msg = line.str();
    books[this_book].borrow_book();
    return true;
