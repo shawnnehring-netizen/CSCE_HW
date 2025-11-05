@@ -1,0 +1,3 @@
+Hearts Clubs Diamonds Spades
+8 10 J Q K A Super-suit
+Super-suit Hearts
