@@ -4,23 +4,40 @@
 using std::string;
 
 Card::Card(string rank, string suit) /* TODO: initialize */ {
-    // TODO: implement constructor checks
+    for (char c: rank){
+        if (!isalnum(c)){
+            throw std::invalid_argument("rank");
+        }
+    }
+    for (char c: suit){
+        if (!isalnum(c)){
+            throw std::invalid_argument("suit");
+        }
+    }
+    rank = rank;
+    suit = suit;
+    timesPlayed = 0;
 }
 
 string Card::getRank(){
-    // TODO: implement getter
+    return rank;
 }
 
 string Card::getSuit(){
-    // TODO: implement getter
+    return suit;
 }
 
 int Card::getTimesPlayed(){
-    // TODO: implement getter
+    return timesPlayed;
 }
 
 bool Card::canBePlayed(string currentRank, string currentSuit){
-    // TODO: return whether or not this card can legally be played given that the previous card
+    if ((currentRank == rank && currentSuit == suit) || rank == "8"){
+        return true;
+    }
+    else{
+        return false;
+    }
     //  played had rank currentRank and suit currentSuit
 }
 
