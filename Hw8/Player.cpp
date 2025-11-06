@@ -3,7 +3,7 @@
 #include "Player.h"
 using std::vector, std::string, std::size_t;
 
-Player::Player(bool isAI) : isAI(isAI) {
+Player::Player(bool isAI) : isAI{isAI}, hand{{}} {
 
 }
 
@@ -63,7 +63,7 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
             }
             bool here = false;
             int index = 0;
-            Card* try_card = &Card(rank, suit);
+            Card* try_card = new Card(rank, suit);
             for (unsigned int i = 0; i<hand.size();i++){
                 if (hand[i]->getRank() == try_card->getRank() && hand[i]->getSuit() == try_card->getSuit()){
                     here = true;

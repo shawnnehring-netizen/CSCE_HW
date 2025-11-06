@@ -3,7 +3,7 @@
 #include "Card.h"
 using std::string;
 
-Card::Card(string rank, string suit) /* TODO: initialize */ {
+Card::Card(string rank, string suit) : rank{rank}, suit{suit}, timesPlayed{0} {
     for (char c: rank){
         if (!isalnum(c)){
             throw std::invalid_argument("rank");
@@ -14,9 +14,6 @@ Card::Card(string rank, string suit) /* TODO: initialize */ {
             throw std::invalid_argument("suit");
         }
     }
-    rank = rank;
-    suit = suit;
-    timesPlayed = 0;
 }
 
 string Card::getRank(){
