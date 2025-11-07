@@ -120,19 +120,20 @@ void Game::drawCard(Player* p){
         }
     }
     Card* draw_card = drawPile.back();
+    drawPile.erase(drawPile.end());
     p->addToHand(draw_card);
     // TODO: Move the top card of the draw pile to Player p's hand
     // If the draw pile is empty, flip the discard pile to create a new one
 }
 
 Card* Game::deal(int numCards){
-    Card *dis_card = drawPile[0];
-    drawPile.erase(drawPile.begin());
+    Card *dis_card = drawPile.back();
+    drawPile.erase(drawPile.end());
     discardPile.push_back(dis_card);
-    for(int j = 0; j < numCards; j++){
+    for (int j = 0; j < numCards ; j++){
         for(unsigned int i = 0; i < players.size(); i++){
             drawCard(players[i]);
-        }
+        }   
     }
     return dis_card;
     // TODO: Flip the top card of the draw pile to be the initial discard

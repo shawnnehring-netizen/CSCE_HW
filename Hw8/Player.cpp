@@ -72,7 +72,6 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                     index = i;
                 }
             }
-            Card* re_card = hand[index];
             if (!here){
                 std::cout << "That's not a card you have. Try again." << std::endl;
                 continue;
@@ -81,6 +80,7 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                 std::cout << "You can't play that card. Try again." << std::endl;
                 continue;
             }
+            Card* re_card = hand[index];
             if (hand[index]->getRank() == "8"){
                 std::string new_suit = "";
                 std::cout << "What suit would you like to declare?" << std::endl;
