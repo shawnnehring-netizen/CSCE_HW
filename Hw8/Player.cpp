@@ -96,6 +96,9 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                         std::cout << "That's not a suit in this deck. Try again." << std::endl;
                         continue;
                     }
+                    else{
+                        break;
+                    }
                 }
                 hand[index]->play();
                 played = hand[index];
