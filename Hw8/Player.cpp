@@ -67,9 +67,10 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
             int index = 0;
             Card* try_card = new Card(rank, suit);
             for (unsigned int i = 0; i<hand.size();i++){
-                if (hand[i]->getRank() == try_card->getRank() || hand[i]->getSuit() == try_card->getSuit()){
+                if (hand[i]->getRank() == try_card->getRank() && hand[i]->getSuit() == try_card->getSuit()){
                     here = true;
                     index = i;
+                    break;
                 }
             }
             if (!here){
@@ -80,7 +81,6 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                 std::cout << "You can't play that card. Try again." << std::endl;
                 continue;
             }
-            Card* re_card = hand[index];
             if (hand[index]->getRank() == "8"){
                 std::string new_suit = "";
                 std::cout << "What suit would you like to declare?" << std::endl;
@@ -98,16 +98,18 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                     }
                 }
                 hand[index]->play();
+                played = hand[index];
                 currentRank = hand[index]->getRank();
                 currentSuit = new_suit;
                 hand.erase(hand.begin() + index);
-                return re_card;
+                return played;
             }
             hand[index]->play();
+            played = hand[index];
             currentRank = hand[index]->getRank();
             currentSuit = hand[index]->getSuit();
             hand.erase(hand.begin() + index);
-            return re_card;
+            return played;
 
         }
 
