@@ -27,7 +27,9 @@ void Game::loadDeckFromFile(string filename){
                 }
                 suit+=c;
             }
-            suits.push_back(suit);
+            if (suit.size() != 0){
+                suits.push_back(suit);
+            }
             step = 1;
             continue;
         }
@@ -41,7 +43,9 @@ void Game::loadDeckFromFile(string filename){
                 }
                 rank+=c;
             }
-            ranks.push_back(rank);
+            if (rank.size() !=0){
+                ranks.push_back(rank);
+            }
             step = 2;
             continue;
         }
@@ -122,8 +126,8 @@ void Game::drawCard(Player* p){
 }
 
 Card* Game::deal(int numCards){
-    Card *dis_card = drawPile.back();
-    drawPile.erase(drawPile.end());
+    Card *dis_card = drawPile[0];
+    drawPile.erase(drawPile.begin());
     discardPile.push_back(dis_card);
     for(int j = 0; j < numCards; j++){
         for(unsigned int i = 0; i < players.size(); i++){

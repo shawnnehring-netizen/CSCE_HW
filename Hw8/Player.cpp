@@ -57,7 +57,7 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
     else{
         std::cout<< "Your hand contains: " << getHandString() << std::endl;
         std::cout<< "The next card played must be a " << currentRank << " or " << currentSuit << std::endl;
-        std::cout<<"What would you like to play? (enter \"draw card\" to draw a card)";
+        std::cout<<"What would you like to play? (enter \"draw card\" to draw a card)" << std::endl;
         while(true){
             std::cin >> rank >> suit;
             if (rank == "draw" && suit == "card"){
@@ -73,16 +73,16 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                 }
             }
             if (!here){
-                std::cout << "That's not a card you have. Try again.";
+                std::cout << "That's not a card you have. Try again." << std::endl;
                 continue;
             }
-            if (!try_card->canBePlayed(currentRank,currentSuit)){
-                std::cout << "You can't play that card. Try again.";
+            if (!hand[index]->canBePlayed(currentRank,currentSuit)){
+                std::cout << "You can't play that card. Try again." << std::endl;
                 continue;
             }
-            if (try_card->getRank() == "8"){
+            if (hand[index]->getRank() == "8"){
                 std::string new_suit = "";
-                std::cout << "What suit would you like to declare?";
+                std::cout << "What suit would you like to declare?" << std::endl;
                 while(true){
                     bool suit_yeah = false;
                     std::cin >> new_suit;
@@ -92,21 +92,21 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                         }
                     }
                     if (!suit_yeah){
-                        std::cout << "That's not a suit in this deck. Try again.";
+                        std::cout << "That's not a suit in this deck. Try again." << std::endl;
                         continue;
                     }
                 }
-                try_card->play();
-                currentRank = try_card->getRank();
+                hand[index]->play();
+                currentRank = hand[index]->getRank();
                 currentSuit = new_suit;
                 hand.erase(hand.begin() + index);
-                return try_card;
+                return hand[index];
             }
-            try_card->play();
-            currentRank = try_card->getRank();
-            currentSuit = try_card->getSuit();
+            hand[index]->play();
+            currentRank = hand[index]->getRank();
+            currentSuit = hand[index]->getSuit();
             hand.erase(hand.begin() + index);
-            return try_card;
+            return hand[index];
 
         }
 
