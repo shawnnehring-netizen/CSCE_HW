@@ -14,7 +14,7 @@ void Game::loadDeckFromFile(string filename){
     std::string line = "";
     int step = 0;
     if (!(deck_in.is_open())){
-      throw std::runtime_error("cant open");
+        throw std::runtime_error("cant open");
     }
     while(getline(deck_in,line)){
         if (step == 0){
@@ -29,19 +29,21 @@ void Game::loadDeckFromFile(string filename){
             }
             suits.push_back(suit);
             step = 1;
+            continue;
         }
         else if (step == 1){
             std::string rank = "";
             for(char c: line){
                 if(c == ' '){
-                    suits.push_back(rank);
+                    ranks.push_back(rank);
                     rank = "";
                     continue;
                 }
                 rank+=c;
             }
-            suits.push_back(rank);
+            ranks.push_back(rank);
             step = 2;
+            continue;
         }
         else{
             std::string word = "";
@@ -112,7 +114,8 @@ void Game::drawCard(Player* p){
             }
         }
     }
-    Card* draw_card = drawPile.back();
+    Card* draw_card = drawPile[0];
+    drawPile.erase(drawPile.begin());
     p->addToHand(draw_card);
     // TODO: Move the top card of the draw pile to Player p's hand
     // If the draw pile is empty, flip the discard pile to create a new one
@@ -157,60 +160,34 @@ string Game::mostPlayedSuit(){
 }
 
 int Game::runGame(){
-    //deck
-    std::cout << "Choose a file to load the deck from:" << std::endl;
-    std::string deck = "";
-    std::cin >> deck;
-    loadDeckFromFile(deck);
-    //player count
-    std::cout << "Enter number of players:" << std::endl;
-    int play_count = 0;
+    std::string current_rank = discardPile[0]->getRank();
+    std::string current_suit = discardPile[0]->getSuit();
+    int play_count = players.size();
+    int winner = 0;
+    bool win = false;
     while(true){
-        std::cin >> play_count;
-        if(!(isdigit(play_count) && play_count > 0)){
-            std::cout << "Please enter a positive number" << std::endl;
-            continue;
-        }
-        break;
-    }
-    //player ai or not
-    for(int i = 0; i < play_count; i++){
-        while(true){
-            char play_iden = ' ';
-            std::cout << "Is player " << i << " an AI? (y/n)" << std::endl;
-            std::cin >> play_iden;
-            if (play_iden == 'y'){
-                addPlayer(true);
-                break;
-            }
-            if (play_iden == 'n'){
-                addPlayer(false);
-                break;
-            }
-            else{
-                std::cout << "Please enter y or n" << std::endl;
+        for (int i = 0; i < play_count;i++){
+            std::cout << "Player " << i << "'s turn!" << std::endl;
+            Card* next_card = players[i]->playCard(suits, current_rank, current_suit);
+            if(next_card == nullptr){
+                std::cout << "Player " << i << " draws a card." << std::endl;
+                drawCard(players[i]);
                 continue;
             }
+            if(players[i]->getHandSize() == 0){
+                winner = i;
+                win = true;
+                break;
+            }
         }
-    }
-    //number of cards dealt
-    int num_cards = 0;
-    std::cout << "How many cards should each player start with?" << std::endl;
-    while(true){
-        std::cin >> num_cards;
-        if (!(isdigit(num_cards) && num_cards > 0)){
-            std::cout << "Please enter a positive number" << std::endl;
-            continue;
-        }
-        else{
+        if(win){
             break;
         }
+        
     }
-    Card* dis_card = deal(num_cards);
-    std::cout << "The initial discard is " << dis_card->getRank() << " " << dis_card->getSuit() << std::endl;
 
     // TODO: Run the game and return the number of the winning player
-    return 0;
+    return winner;
 }
 
 //Destructor--Deallocates all the dynamic memory we allocated

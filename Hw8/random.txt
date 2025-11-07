@@ -1,0 +1,60 @@
+    // deck
+    std::cout << "Choose a file to load the deck from:" << std::endl;
+    std::string deck = "";
+    std::cin >> deck;
+    std::cout << deck << std::endl;
+    loadDeckFromFile(deck);
+    // player count
+    std::cout << "Enter number of players:" << std::endl;
+    int play_count = 0;
+    while (true)
+    {
+        std::cin >> play_count;
+        if (!(isdigit(play_count) && play_count > 0))
+        {
+            std::cout << "Please enter a positive number" << std::endl;
+            continue;
+        }
+        break;
+    }
+    // player ai or not
+    for (int i = 0; i < play_count; i++)
+    {
+        while (true)
+        {
+            char play_iden = ' ';
+            std::cout << "Is player " << i << " an AI? (y/n)" << std::endl;
+            std::cin >> play_iden;
+            if (play_iden == 'y')
+            {
+                addPlayer(true);
+                break;
+            }
+            if (play_iden == 'n')
+            {
+                addPlayer(false);
+                break;
+            }
+            else
+            {
+                std::cout << "Please enter y or n" << std::endl;
+                continue;
+            }
+        }
+    }
+    // number of cards dealt
+    int num_cards = 0;
+    std::cout << "How many cards should each player start with?" << std::endl;
+    while (true)
+    {
+        std::cin >> num_cards;
+        if (!(isdigit(num_cards) && num_cards > 0))
+        {
+            std::cout << "Please enter a positive number" << std::endl;
+            continue;
+        }
+        else
+        {
+            break;
+        }
+    }

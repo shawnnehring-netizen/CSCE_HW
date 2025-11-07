@@ -4,6 +4,9 @@
 using std::string;
 
 Card::Card(string rank, string suit) : rank{rank}, suit{suit}, timesPlayed{0} {
+    if (rank == "" || suit == ""){
+        throw std::invalid_argument("blank");
+    }
     for (char c: rank){
         if (!isalnum(c)){
             throw std::invalid_argument("rank");
@@ -29,7 +32,7 @@ int Card::getTimesPlayed(){
 }
 
 bool Card::canBePlayed(string currentRank, string currentSuit){
-    if ((currentRank == rank && currentSuit == suit) || rank == "8"){
+    if (currentRank == rank || currentSuit == suit || rank == "8"){
         return true;
     }
     else{

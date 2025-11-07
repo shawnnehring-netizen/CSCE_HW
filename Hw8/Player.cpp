@@ -3,7 +3,7 @@
 #include "Player.h"
 using std::vector, std::string, std::size_t;
 
-Player::Player(bool isAI) : isAI{isAI}, hand{{}} {
+Player::Player(bool isAI) : isAI{isAI}, hand{} {
 
 }
 
@@ -35,7 +35,7 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
     std::string suit = "";
     if (isAI){
         for (unsigned int i = 0; i<hand.size();i++){
-            if ((*hand[i]).getRank() == "8"){
+            if (hand[i]->getRank() == "8"){
                     hand[i]->play();
                     played = hand[i];
                     currentRank = played->getRank();
@@ -43,7 +43,7 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                     hand.erase(hand.begin() + i);
                     return played;
             }
-            if (hand[i]->getRank() == currentRank && hand[i]->getSuit() == currentSuit){
+            if (hand[i]->getRank() == currentRank || hand[i]->getSuit() == currentSuit){
                 hand[i]->play();
                 played = hand[i];
                 currentRank = played->getRank();
@@ -55,17 +55,19 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
         return nullptr;
     }
     else{
+        std::cout<< "Your hand contains: " << getHandString() << std::endl;
+        std::cout<< "The next card played must be a " << currentRank << " or " << currentSuit << std::endl;
         std::cout<<"What would you like to play? (enter \"draw card\" to draw a card)";
         while(true){
             std::cin >> rank >> suit;
-            if (rank == "" && suit == ""){
+            if (rank == "draw" && suit == "card"){
                 return nullptr;
             }
             bool here = false;
             int index = 0;
             Card* try_card = new Card(rank, suit);
             for (unsigned int i = 0; i<hand.size();i++){
-                if (hand[i]->getRank() == try_card->getRank() && hand[i]->getSuit() == try_card->getSuit()){
+                if (hand[i]->getRank() == try_card->getRank() || hand[i]->getSuit() == try_card->getSuit()){
                     here = true;
                     index = i;
                 }
