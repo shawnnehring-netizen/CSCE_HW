@@ -113,13 +113,13 @@ void Game::drawCard(Player* p){
             throw std::runtime_error("nothing to draw");
         }
         else if(discardPile.size() >= 2){
-            for (unsigned int i = 0; i < discardPile.size(); i++){
-                drawPile.push_back(discardPile[i]);
+            for (unsigned int i = 0; i < (discardPile.size() -1); i++){
+                drawPile.insert(drawPile.begin(),discardPile[i]);
+                discardPile.erase(discardPile.end());
             }
         }
     }
-    Card* draw_card = drawPile[0];
-    drawPile.erase(drawPile.begin());
+    Card* draw_card = drawPile.back();
     p->addToHand(draw_card);
     // TODO: Move the top card of the draw pile to Player p's hand
     // If the draw pile is empty, flip the discard pile to create a new one

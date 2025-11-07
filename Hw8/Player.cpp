@@ -72,6 +72,7 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                     index = i;
                 }
             }
+            Card* re_card = hand[index];
             if (!here){
                 std::cout << "That's not a card you have. Try again." << std::endl;
                 continue;
@@ -100,13 +101,13 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                 currentRank = hand[index]->getRank();
                 currentSuit = new_suit;
                 hand.erase(hand.begin() + index);
-                return hand[index];
+                return re_card;
             }
             hand[index]->play();
             currentRank = hand[index]->getRank();
             currentSuit = hand[index]->getSuit();
             hand.erase(hand.begin() + index);
-            return hand[index];
+            return re_card;
 
         }
 
