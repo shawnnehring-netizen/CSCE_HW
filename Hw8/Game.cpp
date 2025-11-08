@@ -108,11 +108,11 @@ void Game::addPlayer(bool isAI){
 
 void Game::drawCard(Player* p){
     if(drawPile.size() == 0){
-        std::cout << "Draw pile empty, flipping the discard pile." << std::endl;
         if(discardPile.size() == 1){
             throw std::runtime_error("nothing to draw");
         }
         else if(discardPile.size() >= 2){
+            std::cout << "Draw pile empty, flipping the discard pile." << std::endl;
             Card* keep = discardPile.back();
             discardPile.pop_back();
             for (unsigned int i = 0; i < discardPile.size(); i++){
@@ -177,15 +177,17 @@ int Game::runGame(){
             std::cout << "Player " << i << "'s turn!" << std::endl;
             Card* next_card = players[i]->playCard(suits, current_rank, current_suit);
             if(next_card == nullptr){
-                std::cout << "Player " << i << " draws a card." << std::endl;
                 drawCard(players[i]);
+                std::cout << "Player " << i << " draws a card." << std::endl;
                 continue;
             }
             else if (next_card->getRank() == "8"){
                 std::cout << "Player " << i << " plays 8 " << next_card->getSuit() << " and changes the suit to " << current_suit << "." <<std::endl;
+                discardPile.push_back(next_card);
             }
             else{
                 std::cout << "Player " << i << " plays " << next_card->getRank() << " " << next_card->getSuit() << "." <<std::endl;
+                discardPile.push_back(next_card);
             }
             if(players[i]->getHandSize() == 0){
                 winner = i;
