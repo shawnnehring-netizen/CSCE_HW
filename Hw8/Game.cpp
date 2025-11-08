@@ -98,7 +98,6 @@ void Game::loadDeckFromFile(string filename){
         }
 
     }
-
 }
 
 void Game::addPlayer(bool isAI){
@@ -115,24 +114,26 @@ void Game::drawCard(Player* p){
         else if(discardPile.size() >= 2){
             for (unsigned int i = 0; i < (discardPile.size() -1); i++){
                 drawPile.insert(drawPile.begin(),discardPile[i]);
-                discardPile.erase(discardPile.end());
+                discardPile.pop_back();
             }
         }
     }
-    Card* draw_card = drawPile.back();
-    drawPile.erase(drawPile.end());
-    p->addToHand(draw_card);
+    p->addToHand(drawPile.back());
+    drawPile.pop_back();
     // TODO: Move the top card of the draw pile to Player p's hand
     // If the draw pile is empty, flip the discard pile to create a new one
 }
 
 Card* Game::deal(int numCards){
     Card *dis_card = drawPile.back();
-    drawPile.erase(drawPile.end());
+    drawPile.pop_back();
     discardPile.push_back(dis_card);
     for (int j = 0; j < numCards ; j++){
+        std::cout << j << std::endl;
         for(unsigned int i = 0; i < players.size(); i++){
+
             drawCard(players[i]);
+            std::cout << drawPile.back()->getRank() << drawPile.back()->getSuit() << std::endl;
         }   
     }
     return dis_card;
