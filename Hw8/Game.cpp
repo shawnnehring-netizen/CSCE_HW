@@ -108,6 +108,7 @@ void Game::addPlayer(bool isAI){
 
 void Game::drawCard(Player* p){
     if(drawPile.size() == 0){
+        std::cout << "Draw pile empty, flipping the discard pile." << std::endl;
         if(discardPile.size() == 1){
             throw std::runtime_error("nothing to draw");
         }
@@ -179,6 +180,9 @@ int Game::runGame(){
                 std::cout << "Player " << i << " draws a card." << std::endl;
                 drawCard(players[i]);
                 continue;
+            }
+            else if (next_card->getRank() == "8"){
+                std::cout << "Player " << i << " plays 8 " << next_card->getSuit() << " and changes the suit to " << current_suit << "." <<std::endl;
             }
             else{
                 std::cout << "Player " << i << " plays " << next_card->getRank() << " " << next_card->getSuit() << "." <<std::endl;
