@@ -178,7 +178,7 @@ int Game::runGame(){
             Card* next_card = players[i]->playCard(suits, current_rank, current_suit);
             if(next_card == nullptr){
                 if (drawPile.size() == 0){
-                    std::cout << "Player " << i << "cannot draw a card." << std::endl;
+                    std::cout << "Player " << i << " cannot draw a card." << std::endl;
                     return -1;
                 }
                 drawCard(players[i]);
