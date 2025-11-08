@@ -113,6 +113,7 @@ void Game::drawCard(Player* p){
         }
         else if(discardPile.size() >= 2){
             Card* keep = discardPile.back();
+            discardPile.pop_back();
             for (unsigned int i = 0; i < discardPile.size(); i++){
                 drawPile.insert(drawPile.begin(),discardPile[i]);
             }

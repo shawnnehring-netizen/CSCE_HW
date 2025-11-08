@@ -59,7 +59,11 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
         std::cout<< "The next card played must be a " << currentRank << " or " << currentSuit << std::endl;
         std::cout<<"What would you like to play? (enter \"draw card\" to draw a card)" << std::endl;
         while(true){
+            rank = "";
+            suit = "";
+            std::cin.clear();
             std::cin >> rank >> suit;
+            //std::cout << rank << " " << suit << std::endl;
             if (rank == "draw" && suit == "card"){
                 return nullptr;
             }
