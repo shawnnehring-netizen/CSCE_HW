@@ -112,10 +112,12 @@ void Game::drawCard(Player* p){
             throw std::runtime_error("nothing to draw");
         }
         else if(discardPile.size() >= 2){
-            for (unsigned int i = 0; i < (discardPile.size() -1); i++){
+            Card* keep = discardPile.back();
+            for (unsigned int i = 0; i < discardPile.size(); i++){
                 drawPile.insert(drawPile.begin(),discardPile[i]);
-                discardPile.pop_back();
             }
+            discardPile.clear();
+            discardPile.push_back(keep);
         }
     }
     p->addToHand(drawPile.back());
@@ -129,11 +131,8 @@ Card* Game::deal(int numCards){
     drawPile.pop_back();
     discardPile.push_back(dis_card);
     for (int j = 0; j < numCards ; j++){
-        std::cout << j << std::endl;
         for(unsigned int i = 0; i < players.size(); i++){
-
             drawCard(players[i]);
-            std::cout << drawPile.back()->getRank() << drawPile.back()->getSuit() << std::endl;
         }   
     }
     return dis_card;
@@ -179,6 +178,9 @@ int Game::runGame(){
                 std::cout << "Player " << i << " draws a card." << std::endl;
                 drawCard(players[i]);
                 continue;
+            }
+            else{
+                std::cout << "Player " << i << " plays " << next_card->getRank() << " " << next_card->getSuit() << "." <<std::endl;
             }
             if(players[i]->getHandSize() == 0){
                 winner = i;
