@@ -177,12 +177,14 @@ int Game::runGame(){
             std::cout << "Player " << i << "'s turn!" << std::endl;
             Card* next_card = players[i]->playCard(suits, current_rank, current_suit);
             if(next_card == nullptr){
-                if (drawPile.size() == 0){
+                try{
+                    drawCard(players[i]);
+                    std::cout << "Player " << i << " draws a card." << std::endl;
+                }
+                catch(...){
                     std::cout << "Player " << i << " cannot draw a card." << std::endl;
                     return -1;
                 }
-                drawCard(players[i]);
-                std::cout << "Player " << i << " draws a card." << std::endl;
                 continue;
             }
             else if (next_card->getRank() == "8"){
