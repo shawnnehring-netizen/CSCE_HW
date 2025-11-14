@@ -14,10 +14,10 @@ class MyString{
         MyString();
         MyString(const MyString& str);
         MyString (const char* c);
-        int size();
-        int length(MyString str);
-        int capacity();
         MyString& operator=(MyString const& new_str);
+        int size();
+        int length();
+        int capacity();
         void clear();
         void resize(unsigned n);
         bool empty();

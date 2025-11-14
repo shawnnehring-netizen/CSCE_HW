@@ -35,8 +35,8 @@ int MyString::size(){
     return size_;
 }
 
-int MyString::length(MyString str){
-    return str.size_;
+int MyString::length(){
+    return size_;
 }
 
 int MyString::capacity(){
@@ -63,14 +63,6 @@ bool MyString::empty(){
     }
 }
 
-const char& MyString::at(unsigned pos) {
-    return str_arr[pos];
-}
-
-const char& MyString::front() {
-    return str_arr[0];
-}
-
 MyString& MyString::operator+=(MyString new_str){
     if (size_ + new_str.size_ > capacity_){
         capacity_ *= 2;
@@ -80,6 +72,15 @@ MyString& MyString::operator+=(MyString new_str){
     }
     return *this;
 }
+
+const char& MyString::at(unsigned pos) {
+    return str_arr[pos];
+}
+
+const char& MyString::front() {
+    return str_arr[0];
+}
+
 
 char* MyString::data(){
     return str_arr;
@@ -93,12 +94,16 @@ bool MyString::find(MyString str){
     }
 }
 
-//std::ostream& operator<<(std::ostream& os, MyString& new_str){
-//    for (unsigned int i = 0; i < new_str.size(); i++){
-//       os << new_str.data()[i];
-//    }
-//    return os;
-//}
+MyString::~MyString(){
+    delete[] str_arr;
+}
+
+std::ostream& operator<<(std::ostream& os, MyString& new_str){
+    for (unsigned int i = 0; i < new_str.size(); i++){
+       os << new_str.data()[i];
+    }
+    return os;
+}
 
 MyString& operator+(MyString old, MyString new_){
     if (old.size() + new_.size() > old.capacity()){
@@ -120,8 +125,4 @@ bool operator==(MyString old, MyString new_){
         return true;
     }
     return false;
-}
-
-MyString::~MyString(){
-    delete[] str_arr;
 }
