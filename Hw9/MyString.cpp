@@ -41,15 +41,15 @@ MyString& MyString::operator=(MyString const& new_str){
 
 }
 
-unsigned MyString::size()const{
+size_t MyString::size()const{
     return size_;
 }
 
-unsigned MyString::length()const{
+size_t MyString::length()const{
     return size_;
 }
 
-unsigned MyString::capacity()const{
+size_t MyString::capacity()const{
     return capacity_;
 }
 
@@ -57,7 +57,7 @@ void MyString::clear(){
     size_ = 0;
 }
 
-void MyString::resize(unsigned n){
+void MyString::resize(size_t n){
     if(n > capacity_){
         capacity_ *= 2;
     }
@@ -83,7 +83,7 @@ MyString& MyString::operator+=(MyString new_str){
     return *this;
 }
 
-const char& MyString::at(unsigned pos)const {
+const char& MyString::at(size_t pos)const {
     return str_arr[pos];
 }
 
@@ -97,7 +97,7 @@ char* MyString::data() const{
 }
 
 bool MyString::find(MyString str){
-    for (unsigned i = 0;  i < size_; i++){
+    for (size_t i = 0;  i < size_; i++){
         if (str_arr[i] == *str.str_arr){
             return true;
         }
