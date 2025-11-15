@@ -75,12 +75,12 @@ bool MyString::empty(){
 }
 
 MyString& MyString::operator+=(const MyString new_str){
-    size_t old = size_;
+    size_t old = size_ - 1;
     this->resize(new_str.size_ + size_);
     for (size_t i = 0; i < new_str.size_; i++){
         str_arr[i+old] = new_str.str_arr[i];
     }
-    str_arr[size_] = '\0';
+    str_arr[size_ - 1] = '\0';
     return *this;
 }
 
@@ -102,10 +102,12 @@ char* MyString::data() const{
 
 size_t MyString::find(const MyString& new_str, size_t pos) const{
     size_t j = 0;
+    size_t first = 0;
     for (size_t i = pos; i < size_; i++){
         if (str_arr[i] == new_str.str_arr[j]){
-            size_t first = i;
-            if (j == new_str.size_){
+            if (j == 0){
+                first = i;}
+            if (j == new_str.size_-1){
                 return first;
             }
             j += 1;
