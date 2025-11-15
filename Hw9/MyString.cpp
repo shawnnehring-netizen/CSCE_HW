@@ -54,12 +54,12 @@ size_t MyString::capacity()const{
 }
 
 void MyString::clear(){
-    size_ = 1;
+    size_ = 0;
     str_arr[0] = '\0';
 }
 
 void MyString::resize(size_t n){
-    while(n > capacity_){
+    while(n >= capacity_){
         capacity_ *= 2;
     }
     size_ = n;
@@ -113,7 +113,9 @@ MyString::~MyString(){
 }
 
 std::ostream& operator<<(std::ostream& os, const MyString& new_str){
-    os << *new_str.data();
+    for (size_t i = 0; i < new_str.size(); i++){
+        os << (new_str.data()[i]);
+    }
     return os;
 }
 
