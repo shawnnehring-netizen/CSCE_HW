@@ -77,7 +77,7 @@ bool MyString::empty(){
 MyString& MyString::operator+=(MyString new_str){
     this->resize(new_str.size_ + size_);
     for (size_t i = 0; i < new_str.size_; i++){
-        str_arr[i+size_] = new_str.str_arr[i];
+        str_arr[i + size_ - new_str.size_] = new_str.str_arr[i];
     }
     return *this;
 }

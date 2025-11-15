@@ -9,8 +9,8 @@ class MyString{
         char* str_arr;
         size_t size_;
         size_t capacity_;
-        const size_t npos = -1;
     public:
+        static const size_t npos = -1;
         MyString();
         MyString(const MyString& str);
         MyString (const char* c);
