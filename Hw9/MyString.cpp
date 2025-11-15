@@ -75,11 +75,12 @@ bool MyString::empty(){
 }
 
 MyString& MyString::operator+=(const MyString new_str){
-    size_t old = size_ - 1;
+    size_t old = size_;
     this->resize(new_str.size_ + old);
     for (size_t i = 0; i < new_str.size_; i++){
         str_arr[i+old] = new_str.str_arr[i];
     }
+    str_arr[size_] = '\0';
     return *this;
 }
 
