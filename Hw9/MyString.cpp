@@ -101,7 +101,7 @@ char* MyString::data() const{
 size_t MyString::find(const MyString& new_str, size_t pos) const{
     for (size_t i = pos;  i < size_; i++){
         if (str_arr[i] == *new_str.str_arr){
-            return true;
+            return i;
         }
     }
     return npos;
@@ -120,11 +120,9 @@ std::ostream& operator<<(std::ostream& os, const MyString& new_str){
 }
 
 MyString operator+(MyString old, MyString new_){
-    if (old.size() + new_.size() > old.capacity()){
-        old.resize(old.size() + new_.size());
-    }
-    for (size_t i = 0; i < new_.size(); i++){
-        old.data()[i+old.size()] = new_.data()[i];
+    old.resize(old.size() + new_.size());
+    for (size_t i = 0; i < old.size(); i++){
+        old.data()[i + old.size() - new_.size()] = new_.data()[i];
     }
     return old;
 }
