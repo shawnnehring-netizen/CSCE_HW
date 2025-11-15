@@ -80,7 +80,7 @@ MyString& MyString::operator+=(const MyString new_str){
     for (size_t i = 0; i < new_str.size_; i++){
         str_arr[i+old] = new_str.str_arr[i];
     }
-    str_arr[size_-1] = '\0';
+    str_arr[size_] = '\0';
     return *this;
 }
 
@@ -105,13 +105,13 @@ size_t MyString::find(const MyString& new_str, size_t pos) const{
     for (size_t i = pos; i < size_; i++){
         if (str_arr[i] == new_str.str_arr[j]){
             size_t first = i;
-            j += 1;
             if (j == new_str.size_){
                 return first;
             }
-        else{
-            j=0;
+            j += 1;
         }
+        else {
+            j = 0;
         }
     }
     return npos;
