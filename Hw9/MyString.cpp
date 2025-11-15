@@ -12,7 +12,7 @@ MyString::MyString(const MyString& str) : str_arr{new char[str.capacity_]}, size
     }
 }
 
-MyString::MyString (const char* c){
+MyString::MyString (const char* c) : str_arr{}, size_{}, capacity_{}{
     size_t i = 0;
     while(c[i] != '\0'){
         i++;
@@ -54,11 +54,12 @@ size_t MyString::capacity()const{
 }
 
 void MyString::clear(){
-    size_ = 0;
+    size_ = 1;
+    str_arr[0] = '\0';
 }
 
 void MyString::resize(size_t n){
-    if(n > capacity_){
+    while(n > capacity_){
         capacity_ *= 2;
     }
     size_ = n;
@@ -74,9 +75,7 @@ bool MyString::empty(){
 }
 
 MyString& MyString::operator+=(MyString new_str){
-    if (size_ + new_str.size_ > capacity_){
-        capacity_ *= 2;
-    }
+    this->resize(new_str.size_ + size_);
     for (size_t i = 0; i < new_str.size_; i++){
         str_arr[i+size_] = new_str.str_arr[i];
     }
@@ -84,6 +83,9 @@ MyString& MyString::operator+=(MyString new_str){
 }
 
 const char& MyString::at(size_t pos)const {
+    if (pos >= size_){
+        throw std::out_of_range("out of range");
+    }
     return str_arr[pos];
 }
 
@@ -96,21 +98,22 @@ char* MyString::data() const{
     return str_arr;
 }
 
-bool MyString::find(MyString str){
-    for (size_t i = 0;  i < size_; i++){
-        if (str_arr[i] == *str.str_arr){
+size_t MyString::find(const MyString& new_str, size_t pos) const{
+    for (size_t i = pos;  i < size_; i++){
+        if (str_arr[i] == *new_str.str_arr){
             return true;
         }
     }
     return npos;
 }
 
+
 MyString::~MyString(){
     delete[] str_arr;
 }
 
 std::ostream& operator<<(std::ostream& os, const MyString& new_str){
-    os << new_str.data();
+    os << *new_str.data();
     return os;
 }
 

@@ -25,7 +25,7 @@ class MyString{
         const char& at (size_t pos)const;
         const char& front()const;
         char* data() const;
-        bool find(MyString str);
+        size_t find (const MyString& new_str, size_t pos = 0) const;
         ~MyString();
 };
 MyString operator+(MyString old, MyString new_);
