@@ -21,7 +21,7 @@ class MyString{
         void clear();
         void resize(size_t n);
         bool empty();
-        MyString& operator+=(MyString& new_str);
+        MyString& operator+=(const MyString new_str);
         const char& at (size_t pos)const;
         const char& front()const;
         char* data() const;
