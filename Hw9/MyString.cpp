@@ -74,7 +74,7 @@ bool MyString::empty(){
     }
 }
 
-MyString& MyString::operator+=(MyString new_str){
+MyString& MyString::operator+=(const MyString new_str){
     this->resize(new_str.size_ + size_);
     for (size_t i = 0; i < new_str.size_; i++){
         str_arr[i + size_ - new_str.size_] = new_str.str_arr[i];
@@ -100,7 +100,7 @@ char* MyString::data() const{
 
 size_t MyString::find(const MyString& new_str, size_t pos) const{
     for (size_t i = pos;  i < size_; i++){
-        if (str_arr[i] == *new_str.str_arr){
+        if (str_arr[i] == new_str.str_arr[0]){
             return i;
         }
     }
@@ -119,7 +119,7 @@ std::ostream& operator<<(std::ostream& os, const MyString& new_str){
     return os;
 }
 
-MyString operator+(MyString old, MyString new_){
+MyString operator+(MyString old, const MyString new_){
     old.resize(old.size() + new_.size());
     for (size_t i = 0; i < old.size(); i++){
         old.data()[i + old.size() - new_.size()] = new_.data()[i];

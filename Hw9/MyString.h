@@ -21,14 +21,14 @@ class MyString{
         void clear();
         void resize(size_t n);
         bool empty();
-        MyString& operator+=(MyString new_str);
+        MyString& operator+=(const MyString new_str);
         const char& at (size_t pos)const;
         const char& front()const;
         char* data() const;
         size_t find (const MyString& new_str, size_t pos = 0) const;
         ~MyString();
 };
-MyString operator+(MyString old, MyString new_);
+MyString operator+(MyString old, const MyString new_);
 bool operator==(MyString old, MyString new_);
 std::ostream& operator<<(std::ostream& os, const MyString& new_str);
 #endif
