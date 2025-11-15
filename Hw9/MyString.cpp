@@ -63,6 +63,14 @@ void MyString::resize(size_t n){
         capacity_ *= 2;
     }
     size_ = n;
+    char* str = new char[capacity_];
+    for (size_t i = 0; i < size_; i++){
+        str[i] = str_arr[i];
+    }
+    str[size_] = '\0';
+    delete[] str_arr;
+    str_arr = str;
+
 }
 
 bool MyString::empty(){
@@ -74,7 +82,7 @@ bool MyString::empty(){
     }
 }
 
-MyString& MyString::operator+=(const MyString new_str){
+MyString& MyString::operator+=(MyString& new_str){
     size_t old = size_;
     this->resize(new_str.size_ + old);
     for (size_t i = 0; i < new_str.size_; i++){
