@@ -5,10 +5,9 @@
 
 LinkedList::LinkedList() : head{new Node(0)} {}
 
-LinkedList::LinkedList(const LinkedList& other) {
-    int value = other.head->value;
-    Node* point = other.head->next;
-    Node* head = new Node(value,point);
+LinkedList::LinkedList(const LinkedList& other) : head{new Node(0)} {
+    head->value = other.head->value;
+    head->next = other.head->next;
 }
 
 LinkedList::~LinkedList() {
@@ -61,6 +60,7 @@ int LinkedList::at(unsigned index) const{
             }
             point = head->next;
         }
+        return index;
     }
     catch(...){
         throw std::out_of_range("out of bounds");
@@ -77,11 +77,40 @@ int LinkedList::front() const{
 }
 
 void LinkedList::add(int value, unsigned index){
-    
+    try{
+        Node* point = head;
+        for (unsigned int i = 0; i < index-1; i++){
+            point = head->next;
+        }
+        Node other = Node(value);
+        other.next =  point->next;
+        point->next = &other;
+    }
+    catch(...){
+        throw std::out_of_range("inedx ot of bounds");
+    }
 }
 
-void LinkedList::remove(unsigned index){}
+void LinkedList::remove(unsigned index){
+    try{
+        Node* point = head;
+        for (unsigned int i = 0; i < index-1; i++){
+            point = head->next;
+        }
+        Node* deleted_node = point->next;
+        point->next = deleted_node->next;
+        delete deleted_node;
+    }
+    catch(...){
+        throw std::out_of_range("inedx ot of bounds");
+    }
+}
 
-void LinkedList::clear(){}
-
-Node*& LinkedList::get_head() { return head; }
+void LinkedList::clear(){
+    Node* point = head;
+    while(point != nullptr){
+        Node* new_point = point->next;
+        delete point;
+        point = new_point;
+    }
+}
