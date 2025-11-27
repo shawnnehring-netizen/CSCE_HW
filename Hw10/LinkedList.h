@@ -40,7 +40,7 @@ class LinkedList {
      *
      * @param other the list to copy
      */
-    LinkedList& operator=(const LinkedList);
+    LinkedList& operator=(const LinkedList& other);
 
     /**
      * Test whether the list is empty.

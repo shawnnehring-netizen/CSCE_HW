@@ -19,9 +19,8 @@ LinkedList::~LinkedList() {
     }
 }
 
-LinkedList& LinkedList::operator=(const LinkedList){
-    LinkedList new_list = LinkedList();
-    Node* copy_me = new_list.head;
+LinkedList& LinkedList::operator=(const LinkedList& other){
+    Node* copy_me = other.head;
     Node* copy_here = head;
     while(copy_me != nullptr){
         copy_here->value = copy_me->value;
@@ -29,7 +28,7 @@ LinkedList& LinkedList::operator=(const LinkedList){
         copy_here = copy_here->next;
         copy_me = copy_me->next;
     }
-    return new_list;
+    return *this;
 
 }
 
