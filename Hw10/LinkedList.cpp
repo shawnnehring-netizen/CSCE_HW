@@ -3,11 +3,12 @@
 
 // TODO(student): implement a linked list
 
-LinkedList::LinkedList() : head{new Node(0)} {}
+LinkedList::LinkedList() : head{nullptr} {}
 
 LinkedList::LinkedList(const LinkedList& other) : head{new Node(0)} {
     head->value = other.head->value;
     head->next = other.head->next;
+
 }
 
 LinkedList::~LinkedList() {
@@ -20,11 +21,11 @@ LinkedList::~LinkedList() {
 }
 
 LinkedList& LinkedList::operator=(const LinkedList& other){
-    Node* copy_me = other.head;
+    head = new Node(other.head->value);
+    Node* copy_me = other.head->next;
     Node* copy_here = head;
     while(copy_me != nullptr){
-        copy_here->value = copy_me->value;
-        copy_here->next = copy_me->next;
+        copy_here->next = new Node(copy_me->value);
         copy_here = copy_here->next;
         copy_me = copy_me->next;
     }
@@ -80,9 +81,9 @@ void LinkedList::add(int value, unsigned index){
         for (unsigned int i = 0; i < index-1; i++){
             point = head->next;
         }
-        Node other = Node(value);
-        other.next =  point->next;
-        point->next = &other;
+        Node* other = new Node(value);
+        other->next =  point->next;
+        point->next = other;
     }
     catch(...){
         throw std::out_of_range("inedx ot of bounds");
