@@ -7,7 +7,13 @@ LinkedList::LinkedList() : head{nullptr} {}
 
 LinkedList::LinkedList(const LinkedList& other) : head{new Node(0)} {
     head->value = other.head->value;
-    head->next = other.head->next;
+    Node* copy_me = other.head->next;
+    Node* copy_here = head;
+    while(copy_me != nullptr){
+        copy_here->next = new Node(copy_me->value);
+        copy_here = copy_here->next;
+        copy_me = copy_me->next;
+    }
 
 }
 
@@ -34,14 +40,11 @@ LinkedList& LinkedList::operator=(const LinkedList& other){
 }
 
 bool LinkedList::empty() const{
-    if (head->next == nullptr){
-        return true;
-    }
-    return false;
+    return head == nullptr;
 }
 
 unsigned LinkedList::size() const{
-    Node* point = head->next;
+    Node* point = head;
     int size = 0;
     while(point != nullptr){
         size ++;
@@ -67,7 +70,7 @@ int LinkedList::at(unsigned index) const{
 }
 
 int LinkedList::front() const{
-    if(head->next == nullptr){
+    if(head == nullptr){
         throw std::out_of_range("list is empty");
     }
     else{
