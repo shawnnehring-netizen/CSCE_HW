@@ -19,18 +19,17 @@ LinkedList::~LinkedList() {
     }
 }
 
-LinkedList& LinkedList::operator=(const LinkedList list){
-    if (list.head->next != head->next){
-        Node* copy_me = list.head;
-        Node* copy_here = head;
-        while(copy_me != nullptr){
-            copy_here->value = copy_me->value;
-            copy_here->next = copy_me->next;
-            copy_here = copy_here->next;
-            copy_me = copy_me->next;
-        }
+LinkedList& LinkedList::operator=(const LinkedList){
+    LinkedList new_list = LinkedList();
+    Node* copy_me = new_list.head;
+    Node* copy_here = head;
+    while(copy_me != nullptr){
+        copy_here->value = copy_me->value;
+        copy_here->next = copy_me->next;
+        copy_here = copy_here->next;
+        copy_me = copy_me->next;
     }
-    return *this;
+    return new_list;
 
 }
 
