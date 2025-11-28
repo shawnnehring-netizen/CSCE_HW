@@ -55,6 +55,9 @@ unsigned LinkedList::size() const{
 
 int LinkedList::at(unsigned index) const{
     Node* point = head;
+    if (point == nullptr){
+        throw std::out_of_range("out of bounds");
+    }
     for (unsigned int i = 0; i < index; i++){
         if (point == nullptr){
             throw std::out_of_range("out of bounds");
@@ -74,33 +77,35 @@ int LinkedList::front() const{
 }
 
 void LinkedList::add(int value, unsigned index){
-    try{
-        Node* point = head;
-        for (unsigned int i = 0; i < index-1; i++){
-            point = point->next;
+    Node* point = head;
+    if (point == nullptr){
+        throw std::out_of_range("out of bounds");
+    }
+    for (unsigned int i = 0; i < index-1; i++){
+        if (point == nullptr){
+            throw std::out_of_range("out of bounds");
         }
-        Node* other = new Node(value);
-        other->next = point->next;
-        point->next = other;
+        point = point->next;
     }
-    catch(...){
-        throw std::out_of_range("inedx ot of bounds");
-    }
+    Node* other = new Node(value);
+    other->next = point->next;
+    point->next = other;
 }
 
 void LinkedList::remove(unsigned index){
-    try{
-        Node* point = head;
-        for (unsigned int i = 0; i < index-1; i++){
-            point = point->next;
+    Node* point = head;
+    if (point == nullptr){
+        throw std::out_of_range("out of bounds");
+    }
+    for (unsigned int i = 0; i < index-1; i++){
+        if (point == nullptr){
+            throw std::out_of_range("out of bounds");
         }
-        Node* deleted_node = point->next;
-        point->next = deleted_node->next;
-        delete deleted_node;
+        point = point->next;
     }
-    catch(...){
-        throw std::out_of_range("inedx ot of bounds");
-    }
+    Node* deleted_node = point->next;
+    point->next = deleted_node->next;
+    delete deleted_node;
 }
 
 void LinkedList::clear(){
@@ -110,4 +115,5 @@ void LinkedList::clear(){
         delete point;
         point = new_point;
     }
+    head = nullptr;
 }
