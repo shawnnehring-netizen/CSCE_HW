@@ -55,14 +55,14 @@ unsigned LinkedList::size() const{
 
 int LinkedList::at(unsigned index) const{
     Node* point = head;
-    if (point == nullptr){
-        throw std::out_of_range("out of bounds");
-    }
     for (unsigned int i = 0; i < index; i++){
         if (point == nullptr){
             throw std::out_of_range("out of bounds");
         }
         point = point->next;
+    }
+    if (point == nullptr){
+        throw std::out_of_range("out of bounds");
     }
     return point->value;
 }
@@ -77,35 +77,49 @@ int LinkedList::front() const{
 }
 
 void LinkedList::add(int value, unsigned index){
-    Node* point = head;
-    if (point == nullptr){
-        throw std::out_of_range("out of bounds");
+    if (index == 0){
+        Node* other = new Node(value);
+        other->next = head;
+        head = other;
     }
-    for (unsigned int i = 0; i < index-1; i++){
+    else{
+        Node* point = head;
+        for (unsigned int i = 0; i < index-1; i++){
+            if (point == nullptr){
+                throw std::out_of_range("out of bounds");
+            }
+            point = point->next;
+        }
         if (point == nullptr){
             throw std::out_of_range("out of bounds");
         }
-        point = point->next;
+        Node* other = new Node(value);
+        other->next = point->next;
+        point->next = other;
     }
-    Node* other = new Node(value);
-    other->next = point->next;
-    point->next = other;
 }
 
 void LinkedList::remove(unsigned index){
-    Node* point = head;
-    if (point == nullptr){
-        throw std::out_of_range("out of bounds");
+    if (index == 0){
+        Node* deleted_node = head;
+        head = deleted_node->next;
+        delete deleted_node;
     }
-    for (unsigned int i = 0; i < index-1; i++){
+    else{
+        Node* point = head;
+        for (unsigned int i = 0; i < index-1; i++){
+            if (point == nullptr){
+                throw std::out_of_range("out of bounds");
+            }
+            point = point->next;
+        }
         if (point == nullptr){
             throw std::out_of_range("out of bounds");
         }
-        point = point->next;
+        Node* deleted_node = point->next;
+        point->next = deleted_node->next;
+        delete deleted_node;
     }
-    Node* deleted_node = point->next;
-    point->next = deleted_node->next;
-    delete deleted_node;
 }
 
 void LinkedList::clear(){
