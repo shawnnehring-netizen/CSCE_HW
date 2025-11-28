@@ -84,7 +84,7 @@ void LinkedList::add(int value, unsigned index){
     }
     else{
         Node* point = head;
-        for (unsigned int i = 0; i < index-1; i++){
+        for (unsigned int i = 1; i < index; i++){
             if (point == nullptr){
                 throw std::out_of_range("out of bounds");
             }
@@ -107,7 +107,7 @@ void LinkedList::remove(unsigned index){
     }
     else{
         Node* point = head;
-        for (unsigned int i = 0; i < index-1; i++){
+        for (unsigned int i = 1; i < index; i++){
             if (point == nullptr){
                 throw std::out_of_range("out of bounds");
             }
