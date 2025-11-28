@@ -54,16 +54,14 @@ unsigned LinkedList::size() const{
 }
 
 int LinkedList::at(unsigned index) const{
-    try{
-        Node* point = head;
-        for (unsigned int i = 0; i < index; i++){
-            point = head->next;
+    Node* point = head;
+    for (unsigned int i = 0; i < index; i++){
+        if (point == nullptr){
+            throw std::out_of_range("out of bounds");
         }
-        return point->value;
+        point = point->next;
     }
-    catch(...){
-        throw std::out_of_range("out of bounds");
-    }
+    return point->value;
 }
 
 int LinkedList::front() const{
@@ -79,10 +77,10 @@ void LinkedList::add(int value, unsigned index){
     try{
         Node* point = head;
         for (unsigned int i = 0; i < index-1; i++){
-            point = head->next;
+            point = point->next;
         }
         Node* other = new Node(value);
-        other->next =  point->next;
+        other->next = point->next;
         point->next = other;
     }
     catch(...){
@@ -94,7 +92,7 @@ void LinkedList::remove(unsigned index){
     try{
         Node* point = head;
         for (unsigned int i = 0; i < index-1; i++){
-            point = head->next;
+            point = point->next;
         }
         Node* deleted_node = point->next;
         point->next = deleted_node->next;
