@@ -56,13 +56,10 @@ unsigned LinkedList::size() const{
 int LinkedList::at(unsigned index) const{
     try{
         Node* point = head;
-        for (unsigned int i = 0; i <= index; i++){
-            if (i == index){
-                return point->value;
-            }
+        for (unsigned int i = 0; i < index; i++){
             point = head->next;
         }
-        return index;
+        return point->value;
     }
     catch(...){
         throw std::out_of_range("out of bounds");
