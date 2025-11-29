@@ -79,7 +79,8 @@ int LinkedList::front() const{
 void LinkedList::add(int value, unsigned index){
     if (index == 0){
         Node* other = new Node(value);
-        other->next = head;
+        Node* second = head;
+        other->next = second;
         head = other;
     }
     else{
@@ -101,11 +102,8 @@ void LinkedList::add(int value, unsigned index){
 
 void LinkedList::remove(unsigned index){
     if (index == 0){
-        if(head == nullptr){
-           throw std::out_of_range("out of bounds"); 
-        }
         Node* deleted_node = head;
-        head = nullptr;
+        head = head->next;
         delete deleted_node;
     }
     else{
