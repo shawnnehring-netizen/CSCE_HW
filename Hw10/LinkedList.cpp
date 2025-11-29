@@ -125,7 +125,7 @@ void LinkedList::remove(unsigned index){
             }
             point = point->next;
         }
-        if (point == nullptr){
+        if (point == nullptr || point->next == nullptr){
             throw std::out_of_range("out of bounds");
         }
         Node* deleted_node = point->next;
