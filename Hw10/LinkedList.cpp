@@ -27,13 +27,21 @@ LinkedList::~LinkedList() {
 }
 
 LinkedList& LinkedList::operator=(const LinkedList& other){
-    head = new Node(other.head->value);
-    Node* copy_me = other.head->next;
-    Node* copy_here = head;
-    while(copy_me != nullptr){
-        copy_here->next = new Node(copy_me->value);
-        copy_here = copy_here->next;
-        copy_me = copy_me->next;
+    if (this != &other){
+        Node* here = head;
+        while (here != nullptr){
+            Node* next_one = here->next;
+            delete here;
+            here = next_one;
+        }
+        head = new Node(other.head->value);
+        Node* copy_me = other.head->next;
+        Node* copy_here = head;
+        while(copy_me != nullptr){
+            copy_here->next = new Node(copy_me->value);
+            copy_here = copy_here->next;
+            copy_me = copy_me->next;
+        }
     }
     return *this;
 
@@ -101,6 +109,9 @@ void LinkedList::add(int value, unsigned index){
 }
 
 void LinkedList::remove(unsigned index){
+    if(head == nullptr){
+        throw std::out_of_range("out of bounds");
+    }
     if (index == 0){
         Node* deleted_node = head;
         head = head->next;
