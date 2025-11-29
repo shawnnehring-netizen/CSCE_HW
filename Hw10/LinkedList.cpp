@@ -90,6 +90,9 @@ void LinkedList::add(int value, unsigned index){
             }
             point = point->next;
         }
+        if (point == nullptr){
+            throw std::out_of_range("out of bounds");
+        }
         Node* other = new Node(value);
         other->next = point->next;
         point->next = other;
@@ -98,6 +101,9 @@ void LinkedList::add(int value, unsigned index){
 
 void LinkedList::remove(unsigned index){
     if (index == 0){
+        if(head == nullptr){
+           throw std::out_of_range("out of bounds"); 
+        }
         Node* deleted_node = head;
         head = nullptr;
         delete deleted_node;
